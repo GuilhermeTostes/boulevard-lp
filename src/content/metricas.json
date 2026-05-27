@@ -1,0 +1,32 @@
+{
+  "entries": [
+    {
+      "id": "m² projetados",
+      "numero": "16000",
+      "sufixo": "m²",
+      "label": "metros quadrados projetados",
+      "ordem": 1
+    },
+    {
+      "id": "condomínios atendidos",
+      "numero": "10",
+      "sufixo": "+",
+      "label": "condomínios atendidos",
+      "ordem": 2
+    },
+    {
+      "id": "anos de experiência",
+      "numero": "6",
+      "sufixo": "anos",
+      "label": "de experiência",
+      "ordem": 3
+    },
+    {
+      "id": "clientes impactados",
+      "numero": "1000",
+      "sufixo": "+",
+      "label": "pessoas impactadas diretamente",
+      "ordem": 4
+    }
+  ]
+}

@@ -1,0 +1,338 @@
+---
+import { getCollection } from 'astro:content';
+import textos from '../content/textos.json';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  showAll?: boolean;
+  projetos?: CollectionEntry<'projetos'>[];
+}
+const { showAll = false, projetos: projetosProp } = Astro.props;
+
+let projetos: CollectionEntry<'projetos'>[];
+if (projetosProp) {
+  projetos = projetosProp;
+} else {
+  const allProjetos = await getCollection('projetos');
+  const sorted = allProjetos.sort((a, b) => a.data.ordem - b.data.ordem);
+  projetos = showAll
+    ? sorted
+    : sorted.filter((p) => p.data.destaque).slice(0, 6);
+}
+const port = textos.portfolio;
+---
+
+<!-- D3: Bento assimétrico + D4: flat cards -->
+<section id="portfolio" class={`portfolio${showAll ? ' portfolio--all' : ''}`}>
+  <div class="section-inner">
+    <div class="port-header">
+      <div>
+        <p class="label">{port.eyebrow}</p>
+        <div class="gold-line" style="margin-bottom: 0"></div>
+        <h2 style="margin-top: 1rem">{port.titulo}</h2>
+      </div>
+      {!showAll && (
+        <a href="/portfolio" class="btn-text">{port.ver_todos} <span aria-hidden="true">→</span></a>
+      )}
+    </div>
+
+    <div class="bento-grid">
+      {projetos.map((projeto) => (
+        <a
+          href={`/projetos/${projeto.id}`}
+          class={`project-card tile-${projeto.data.tile_size}`}
+          aria-label={projeto.data.title}
+        >
+          <div
+            class="card-thumb"
+            style={`background-image: url('${projeto.data.imagem_capa}')`}
+          ></div>
+          <div class="card-overlay">
+            <span class="ov-tag">{projeto.data.tag}</span>
+            <span class="ov-title">{projeto.data.title}</span>
+          </div>
+          <div class="card-info">
+            <p class="card-tag">{projeto.data.tag}</p>
+            <p class="card-title">{projeto.data.title}</p>
+            <p class="card-meta">{projeto.data.localizacao} — {projeto.data.ano}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+    {!showAll && (
+      <div class="port-footer">
+        <a href="/portfolio" class="btn-text">{port.ver_todos} <span aria-hidden="true">→</span></a>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .portfolio {
+    background: var(--offwhite);
+    padding: 7rem 0;
+  }
+
+  .port-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 3.25rem;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+  }
+
+  /* ── Bento grid ─────────────────────────────────────────── */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto auto;
+    gap: 1.25rem;
+  }
+
+  /* tile sizing */
+  .tile-large {
+    grid-column: span 7;
+    grid-row: span 2;
+  }
+  .tile-wide {
+    grid-column: span 5;
+  }
+  .tile-standard {
+    grid-column: span 4;
+  }
+
+  /* ── Card base ──────────────────────────────────────────── */
+  .project-card {
+    display: block;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--branco);
+    box-shadow: 0 2px 16px rgba(33, 62, 64, 0.08);
+    cursor: pointer;
+    transition:
+      box-shadow 0.4s var(--ease-premium),
+      transform 0.4s var(--ease-premium);
+    text-decoration: none;
+    position: relative;
+  }
+
+  .project-card:hover {
+    box-shadow: 0 10px 40px rgba(33, 62, 64, 0.14);
+    transform: translateY(-3px);
+  }
+
+  /* thumb */
+  .card-thumb {
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s var(--ease-premium);
+  }
+
+  /* large tile has fixed tall thumb */
+  .tile-large .card-thumb {
+    height: 100%;
+    position: absolute;
+    inset: 0;
+  }
+
+  /* wide + standard thumb height */
+  .tile-wide .card-thumb,
+  .tile-standard .card-thumb {
+    height: 220px;
+  }
+
+  /* large card layout override */
+  .tile-large {
+    min-height: 420px;
+    position: relative;
+  }
+
+  .tile-large .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(24,46,48,0.88) 0%, rgba(24,46,48,0.2) 60%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+    opacity: 0;
+    transition: opacity 0.35s var(--ease-premium);
+  }
+
+  .tile-large:hover .card-overlay {
+    opacity: 1;
+  }
+
+  .tile-large .card-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(to top, rgba(24,46,48,0.9) 0%, transparent 100%);
+    transition: opacity 0.35s var(--ease-premium);
+  }
+
+  .tile-large:hover .card-info {
+    opacity: 0;
+  }
+
+  .tile-large .card-info .card-tag,
+  .tile-large .card-info .card-title {
+    color: rgba(240, 239, 245, 0.9);
+  }
+
+  .tile-large .card-info .card-meta {
+    color: rgba(240, 239, 245, 0.55);
+  }
+
+  /* overlay for non-large */
+  .tile-wide .card-overlay,
+  .tile-standard .card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 220px;
+    background: rgba(33, 62, 64, 0.78);
+    opacity: 0;
+    transition: opacity 0.3s var(--ease-premium);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .project-card:hover .card-overlay {
+    opacity: 1;
+  }
+
+  .project-card:hover .card-thumb {
+    transform: scale(1.04);
+  }
+
+  /* overlay text */
+  .ov-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--offwhite);
+    letter-spacing: 0.03em;
+  }
+
+  .ov-tag {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dourado);
+  }
+
+  /* card info strip */
+  .card-info {
+    padding: 1rem 1.125rem 1.125rem;
+  }
+
+  .tile-large .card-info {
+    padding: 1.25rem 2rem;
+  }
+
+  .card-tag {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--dourado);
+    margin-bottom: 4px;
+  }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--verde);
+    margin-bottom: 4px;
+  }
+
+  .card-meta {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--muted);
+  }
+
+  /* página /portfolio: limpa o padding-top para header fixo */
+  .portfolio--all {
+    padding-top: 9rem;
+  }
+
+  @media (max-width: 768px) {
+    .portfolio {
+      padding: 5rem 0;
+    }
+
+    .portfolio--all {
+      padding-top: 7rem;
+    }
+
+    /* Mostra apenas os 3 primeiros na home mobile */
+    .portfolio:not(.portfolio--all) .bento-grid > .project-card:nth-child(n+4) {
+      display: none;
+    }
+
+    .bento-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .tile-large,
+    .tile-wide,
+    .tile-standard {
+      grid-column: 1 / -1;
+      grid-row: auto;
+    }
+
+    /* tile-large vira layout normal (thumb + info abaixo) */
+    .tile-large {
+      min-height: auto;
+      position: relative;
+    }
+
+    .tile-large .card-thumb {
+      position: static;
+      height: 260px;
+    }
+
+    .tile-large .card-overlay {
+      display: none;
+    }
+
+    .tile-large .card-info {
+      position: static;
+      background: none;
+      padding: 1rem 1.125rem 1.125rem;
+    }
+
+    .tile-large .card-info .card-tag,
+    .tile-large .card-info .card-title {
+      color: var(--verde);
+    }
+
+    .tile-large .card-info .card-meta {
+      color: var(--muted);
+    }
+
+    /* Thumb padrão em mobile */
+    .tile-wide .card-thumb,
+    .tile-standard .card-thumb {
+      height: 220px;
+    }
+  }
+
+  .port-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 3.25rem;
+  }
+</style>

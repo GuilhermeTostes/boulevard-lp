@@ -1,0 +1,111 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+import ExploreMore from '../components/ExploreMore.astro';
+import ServicosCards from '../components/servicos/ServicosCards.astro';
+import ServicosFluxo from '../components/servicos/ServicosFluxo.astro';
+import ServicosFAQ from '../components/servicos/ServicosFAQ.astro';
+import servicos from '../content/servicos.json';
+const { hero } = servicos;
+---
+
+<Layout
+  title="Serviços — Boulevard Arq & Con"
+  description="Projetos arquitetônicos e execução de obras com responsabilidade técnica do início ao fim. Atendemos residências, comercial, corporativo, industrial e edifícios."
+>
+  <Header />
+  <main>
+
+    <!-- Hero -->
+    <section class="srv-hero">
+      <div class="srv-hero-watermark" aria-hidden="true">
+        <img src="/assets/symbol-gold.png" alt="" width="520" height="520" />
+      </div>
+      <div class="section-inner">
+        <p class="label">{hero.eyebrow}</p>
+        <div class="gold-line"></div>
+        <h1 class="srv-hero-title">{hero.titulo}</h1>
+        <p class="srv-hero-lead">{hero.lead}</p>
+      </div>
+    </section>
+
+    <ServicosCards />
+    <ServicosFluxo />
+    <ServicosFAQ />
+    <ExploreMore
+      titulo="Explore mais"
+      cards={[
+        {
+          href: '/sobre',
+          titulo: 'Conheça quem assina cada projeto',
+          subtitulo: 'A Boulevard é conduzida diretamente pelos sócios, do briefing à entrega.',
+        },
+        {
+          href: '/portfolio',
+          titulo: 'Veja o resultado na prática',
+          subtitulo: 'Projetos residenciais e comerciais entregues com rigor técnico e atenção ao detalhe.',
+        },
+      ]}
+    />
+    <CtaFinal />
+
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────────── */
+  .srv-hero {
+    background: var(--verde);
+    padding: 11rem 0 7rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .srv-hero-watermark {
+    position: absolute;
+    right: clamp(-280px, -14vw, -160px);
+    top: clamp(-200px, -10vw, -120px);
+    width: min(900px, 70vw);
+    aspect-ratio: 1;
+    opacity: 0.05;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .srv-hero-watermark img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .srv-hero-title {
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-weight: 600;
+    color: var(--offwhite);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    max-width: 700px;
+    margin-bottom: 1.5rem;
+  }
+
+  .srv-hero-lead {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--muted-dk);
+    max-width: 560px;
+  }
+
+  @media (max-width: 768px) {
+    .srv-hero {
+      padding: 9rem 0 5rem;
+    }
+    .srv-hero-watermark {
+      display: none;
+    }
+  }
+</style>

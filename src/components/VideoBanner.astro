@@ -1,0 +1,382 @@
+---
+import textos from '../content/textos.json';
+
+const vb = textos.video_banner as typeof textos.video_banner & { visivel?: boolean };
+
+function toEmbedUrl(url: string): string {
+  if (!url) return '';
+  try {
+    const u = new URL(url);
+    const host = u.hostname.toLowerCase();
+    if (u.protocol !== 'https:' && u.protocol !== 'http:') return '';
+    if (host === 'youtu.be') {
+      const id = u.pathname.replace(/^\//, '').split('/')[0];
+      if (id) return `https://www.youtube.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0`;
+    }
+    if (host === 'youtube.com' || host === 'www.youtube.com') {
+      if (u.pathname.startsWith('/embed/')) {
+        u.searchParams.set('autoplay', '1');
+        u.searchParams.set('rel', '0');
+        return u.toString();
+      }
+      const id = u.searchParams.get('v');
+      if (id) return `https://www.youtube.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0`;
+    }
+    if (host === 'player.vimeo.com' && u.pathname.startsWith('/video/')) {
+      u.searchParams.set('autoplay', '1');
+      return u.toString();
+    }
+    if (host === 'vimeo.com') {
+      const id = u.pathname.replace(/^\//, '').split('/')[0];
+      if (/^\d+$/.test(id)) return `https://player.vimeo.com/video/${id}?autoplay=1`;
+    }
+    return '';
+  } catch {
+    return '';
+  }
+}
+
+const embedUrl = toEmbedUrl(vb.video_url ?? '');
+const isMp4 = /\.(mp4|webm|ogg)(\?|$)/i.test(vb.video_url ?? '');
+---
+
+{vb.visivel === true && (
+  <>
+    <section class="video-banner" aria-label="Vídeo institucional">
+      <div
+        class="vb-bg"
+        style={`background-image: url('${vb.imagem_capa}')`}
+      ></div>
+      <div class="vb-overlay"></div>
+
+      <div class="section-inner vb-content">
+        <p class="label vb-eyebrow">{vb.eyebrow}</p>
+        <div class="gold-line" style="margin: 12px auto 24px"></div>
+        <h2 class="vb-title">{vb.titulo}</h2>
+        {vb.subtitulo && <p class="vb-subtitle">{vb.subtitulo}</p>}
+
+        <button
+          type="button"
+          class="vb-play"
+          id="vbPlay"
+          aria-label="Assistir vídeo"
+          data-embed={embedUrl}
+          data-mp4={isMp4 ? 'true' : 'false'}
+          data-src={vb.video_url}
+        >
+          <span class="vb-play-ring" aria-hidden="true"></span>
+          <span class="vb-play-icon" aria-hidden="true">
+            <svg width="22" height="26" viewBox="0 0 22 26" fill="currentColor">
+              <path d="M0 1.7C0 0.7 1.1 0 2 0.5l19.5 11.3a1 1 0 0 1 0 1.7L2 25c-0.9 0.5-2-0.2-2-1.2V1.7Z"/>
+            </svg>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <div class="vb-modal" id="vbModal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Player de vídeo">
+      <button type="button" class="vb-modal-backdrop" id="vbBackdrop" aria-label="Fechar"></button>
+      <div class="vb-modal-stage">
+        <button type="button" class="vb-modal-close" id="vbClose" aria-label="Fechar vídeo">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <path d="M4 4 L16 16 M16 4 L4 16"/>
+          </svg>
+        </button>
+        <div class="vb-modal-frame" id="vbFrame"></div>
+      </div>
+    </div>
+  </>
+)}
+
+<style>
+  .video-banner {
+    position: relative;
+    background: var(--verde-dk);
+    padding: 9rem 0;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .vb-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.05);
+    transition: transform 0.8s var(--ease-premium);
+    z-index: -2;
+  }
+
+  .vb-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at center, rgba(24, 46, 48, 0.55) 0%, rgba(24, 46, 48, 0.85) 70%),
+      linear-gradient(0deg, rgba(24, 46, 48, 0.65), rgba(24, 46, 48, 0.65));
+    z-index: -1;
+  }
+
+  .vb-content {
+    text-align: center;
+    color: var(--offwhite);
+    position: relative;
+  }
+
+  .vb-eyebrow {
+    color: var(--dourado);
+  }
+
+  .vb-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--offwhite);
+    margin-bottom: 1rem;
+    max-width: 22ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .vb-subtitle {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(240, 239, 245, 0.65);
+    max-width: 50ch;
+    margin: 0 auto 3rem;
+  }
+
+  /* ── Play button ──────────────────────────────────────── */
+  .vb-play {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: var(--dourado);
+    color: var(--verde-dk);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      background 0.4s var(--ease-premium),
+      transform 0.4s var(--ease-premium);
+  }
+
+  .vb-play:hover {
+    background: var(--dourado-h);
+    transform: scale(1.04);
+  }
+
+  .vb-play:hover ~ .vb-bg,
+  .video-banner:hover .vb-bg {
+    transform: scale(1.08);
+  }
+
+  .vb-play-icon {
+    transform: translateX(2px); /* leve compensação ótica do triângulo */
+    line-height: 0;
+  }
+
+  .vb-play-ring {
+    position: absolute;
+    inset: -10px;
+    border-radius: 50%;
+    border: 1px solid rgba(202, 155, 88, 0.45);
+    animation: vbPulse 2.4s var(--ease-premium) infinite;
+  }
+
+  @keyframes vbPulse {
+    0% { transform: scale(1); opacity: 0.7; }
+    70% { transform: scale(1.18); opacity: 0; }
+    100% { transform: scale(1.18); opacity: 0; }
+  }
+
+  /* ── Modal ─────────────────────────────────────────────── */
+  .vb-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(16px, 4vw, 48px);
+    opacity: 0;
+    transition: opacity 0.3s var(--ease-premium);
+  }
+
+  /* [hidden] precisa vencer o display:flex acima — senão o backdrop
+     fixo bloqueia cliques em toda a página */
+  .vb-modal[hidden] {
+    display: none;
+  }
+
+  .vb-modal:not([hidden]) {
+    opacity: 1;
+  }
+
+  .vb-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 18, 19, 0.85);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: none;
+    cursor: pointer;
+  }
+
+  .vb-modal-stage {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+  }
+
+  .vb-modal-close {
+    position: absolute;
+    top: -52px;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(240, 239, 245, 0.1);
+    color: var(--offwhite);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s var(--ease-premium);
+    z-index: 1;
+  }
+
+  .vb-modal-close:hover {
+    background: rgba(240, 239, 245, 0.2);
+  }
+
+  .vb-modal-frame {
+    width: 100%;
+    height: 100%;
+  }
+
+  .vb-modal-frame iframe,
+  .vb-modal-frame video {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+
+  /* ── Responsivo ───────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .video-banner {
+      padding: 6rem 0;
+    }
+    .vb-play {
+      width: 80px;
+      height: 80px;
+    }
+    .vb-play svg {
+      width: 18px;
+      height: 22px;
+    }
+    .vb-modal-close {
+      top: -44px;
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vb-play-ring {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  const playBtn = document.getElementById('vbPlay') as HTMLButtonElement | null;
+  const modal = document.getElementById('vbModal') as HTMLElement | null;
+  const backdrop = document.getElementById('vbBackdrop') as HTMLElement | null;
+  const closeBtn = document.getElementById('vbClose') as HTMLButtonElement | null;
+  const frame = document.getElementById('vbFrame') as HTMLElement | null;
+
+  const allowedEmbedHosts = new Set([
+    'youtube.com',
+    'www.youtube.com',
+    'youtu.be',
+    'vimeo.com',
+    'player.vimeo.com',
+  ]);
+
+  function getSafeHttpUrl(value: string) {
+    try {
+      const url = new URL(value.trim(), window.location.origin);
+      if (url.protocol !== 'https:' && url.protocol !== 'http:') return null;
+      return url;
+    } catch {
+      return null;
+    }
+  }
+
+  function createVideoElement(src: string) {
+    const url = getSafeHttpUrl(src);
+    if (!url || url.origin !== window.location.origin || !/\.(mp4|webm|ogg)$/i.test(url.pathname)) {
+      return null;
+    }
+
+    const video = document.createElement('video');
+    video.src = url.href;
+    video.controls = true;
+    video.autoplay = true;
+    video.playsInline = true;
+    return video;
+  }
+
+  function createIframeElement(src: string) {
+    const url = getSafeHttpUrl(src);
+    if (!url || !allowedEmbedHosts.has(url.hostname.toLowerCase())) return null;
+
+    const iframe = document.createElement('iframe');
+    iframe.src = url.href;
+    iframe.title = 'Vídeo Boulevard';
+    iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    iframe.allowFullscreen = true;
+    return iframe;
+  }
+
+  if (playBtn && modal && backdrop && closeBtn && frame) {
+    const open = () => {
+      const embed = playBtn.dataset.embed ?? '';
+      const isMp4 = playBtn.dataset.mp4 === 'true';
+      const raw = playBtn.dataset.src ?? '';
+
+      frame.replaceChildren();
+
+      const player = isMp4 ? createVideoElement(raw) : createIframeElement(embed);
+      if (!player) return;
+
+      frame.appendChild(player);
+
+      modal.hidden = false;
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const close = () => {
+      modal.hidden = true;
+      modal.setAttribute('aria-hidden', 'true');
+      frame.replaceChildren();
+      document.body.style.overflow = '';
+    };
+
+    playBtn.addEventListener('click', open);
+    backdrop.addEventListener('click', close);
+    closeBtn.addEventListener('click', close);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.hidden) close();
+    });
+  }
+</script>

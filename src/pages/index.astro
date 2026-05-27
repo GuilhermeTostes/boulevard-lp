@@ -1,0 +1,1044 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import HeaderLP from '../components/HeaderLP.astro';
+import FooterLP from '../components/FooterLP.astro';
+import Metrics from '../components/Metrics.astro';
+import Testimonials from '../components/Testimonials.astro';
+import configs from '../content/configs.json';
+import textos from '../content/textos.json';
+import sobre from '../content/sobre.json';
+
+const heroImage = textos.hero.imagem ?? 'https://picsum.photos/seed/boulevard-hero/1920/1280';
+const paragrafos = sobre.body.split(/\n\n+/);
+
+const allProjetos = await getCollection('projetos');
+const projetos = allProjetos
+  .sort((a, b) => a.data.ordem - b.data.ordem)
+  .filter((p) => p.data.destaque)
+  .slice(0, 6);
+---
+
+<Layout
+  title="Boulevard Arq & Con: Do projeto às chaves, em Ribeirão Preto"
+  description="Arquitetura e construção integradas em Ribeirão Preto. Uma equipe, um contrato, responsabilidade técnica integral. Solicite uma conversa."
+>
+  <HeaderLP />
+  <main>
+
+    <!-- ── HERO ──────────────────────────────────────────── -->
+    <section id="hero" class="lp-hero">
+      <div
+        class="lp-hero-bg"
+        role="img"
+        aria-label="Projeto residencial Boulevard Arq & Con"
+        style={`background-image: url('${heroImage}')`}
+      ></div>
+      <div class="lp-hero-overlay"></div>
+      <div class="lp-hero-content">
+        <p class="label">Arquitetura + Construção em Ribeirão Preto e Região</p>
+        <div class="gold-line" style="margin: 14px 0 24px"></div>
+        <h1>Transforme seu espaço com quem cuida de tudo, do projeto às chaves.</h1>
+        <p class="lp-hero-subtitle">Sem obra improvisada. Sem projeto engavetado. A Boulevard reúne arquitetura e construção em uma única equipe, com responsabilidade técnica e presença em cada etapa.</p>
+        <div class="lp-hero-ctas">
+          <a href="#contato" class="btn btn-primary">
+            Quero iniciar meu projeto
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FAIXA DE QUALIFICAÇÃO ─────────────────────────── -->
+    <div class="lp-audience-strip">
+      <div class="section-inner lp-audience-inner">
+        <p class="lp-audience-text">
+          <strong>Para quem é a Boulevard:</strong> atendemos projetos e obras residenciais e comerciais de alto padrão.
+        </p>
+      </div>
+    </div>
+
+    <!-- ── POR QUE A BOULEVARD ────────────────────────────── -->
+    <section class="lp-valueprop">
+      <div class="section-inner">
+        <p class="label">Por que a Boulevard</p>
+        <div class="gold-line"></div>
+        <div class="lp-vp-grid">
+          <div class="lp-vp-card">
+            <p class="lp-vp-num">01</p>
+            <h3 class="lp-vp-title">Do sonho ao projeto aprovado, sem perder a identidade.</h3>
+            <p class="lp-vp-body">Cada projeto começa pela escuta. Desenvolvemos residências e espaços comerciais com identidade, funcionalidade e detalhamento técnico suficiente para que a execução aconteça exatamente como planejado.</p>
+          </div>
+          <div class="lp-vp-card">
+            <p class="lp-vp-num">02</p>
+            <h3 class="lp-vp-title">Obra acompanhada, cronograma respeitado, chaves na mão.</h3>
+            <p class="lp-vp-body">Sua obra conduzida diretamente pelos sócios, do canteiro à entrega. Orçamento detalhado, cronograma claro e total transparência. Surpresa não faz parte do nosso processo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SERVIÇOS ───────────────────────────────────────── -->
+    <section id="servicos" class="lp-services">
+      <div class="section-inner">
+        <div class="lp-services-header">
+          <p class="label">O que fazemos</p>
+          <div class="gold-line"></div>
+          <h2 class="lp-services-title">Uma equipe. Projeto e obra.</h2>
+        </div>
+        <div class="lp-services-grid">
+          <div class="lp-service-card">
+            <p class="lp-service-num">I</p>
+            <h3 class="lp-service-card-title">Projetos</h3>
+            <p class="lp-service-body">Residenciais, comerciais ou corporativos: desenvolvemos projetos com rigor técnico e identidade autoral. Do estudo preliminar ao detalhamento executivo, com foco em transformar sua intenção em espaço construído.</p>
+            <a href="#contato" class="btn-text">
+              Solicitar orçamento <span aria-hidden="true">→</span>
+            </a>
+          </div>
+          <div class="lp-service-card">
+            <p class="lp-service-num">II</p>
+            <h3 class="lp-service-card-title">Obras</h3>
+            <p class="lp-service-body">Executamos obras completas com acompanhamento direto dos sócios em cada etapa. Reformas, construções e interiores, com cronograma, orçamento detalhado e responsabilidade técnica integral do início ao fim.</p>
+            <a href="#contato" class="btn-text">
+              Solicitar orçamento <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PORTFÓLIO ──────────────────────────────────────── -->
+    <section class="lp-portfolio">
+      <div class="section-inner">
+        <div class="lp-port-header">
+          <p class="label">Portfólio</p>
+          <div class="gold-line" style="margin-bottom: 0"></div>
+          <h2 style="margin-top: 1rem">Projetos realizados em Ribeirão Preto</h2>
+        </div>
+        <div class="lp-bento-grid">
+          {projetos.map((projeto) => (
+            <div class={`lp-project-card lp-tile-${projeto.data.tile_size}`}>
+              <div
+                class="lp-card-thumb"
+                style={`background-image: url('${projeto.data.imagem_capa}')`}
+              ></div>
+              <div class="lp-card-overlay">
+                <span class="lp-ov-tag">{projeto.data.tag}</span>
+                <span class="lp-ov-title">{projeto.data.title}</span>
+              </div>
+              <div class="lp-card-info">
+                <p class="lp-card-tag">{projeto.data.tag}</p>
+                <p class="lp-card-title">{projeto.data.title}</p>
+                <p class="lp-card-meta">{projeto.data.localizacao}, {projeto.data.ano}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SOBRE ──────────────────────────────────────────── -->
+    <section id="sobre" class="lp-about">
+      <div class="lp-about-watermark" aria-hidden="true">
+        <img src="/assets/symbol-gold.png" alt="" width="360" height="360" />
+      </div>
+      <div class="section-inner">
+        <p class="label">{sobre.eyebrow}</p>
+        <div class="gold-line"></div>
+        <div class="lp-about-grid">
+          <div class="lp-about-text">
+            <h2 class="preserve-lines">{sobre.titulo}</h2>
+            {paragrafos.map((p) => (
+              <p class="lp-about-body">{p}</p>
+            ))}
+          </div>
+          <div class="lp-about-partners">
+            {sobre.socios.map((s, i) => (
+              <article class="lp-partner-card" style={`--i:${i}`}>
+                <div class="lp-partner-photo" aria-hidden={s.foto ? undefined : 'true'}>
+                  {s.foto ? (
+                    <img src={s.foto} alt={s.nome} loading="lazy" />
+                  ) : (
+                    <span class="lp-partner-initial">{s.nome.trim().charAt(0).toUpperCase()}</span>
+                  )}
+                </div>
+                <div class="lp-partner-info">
+                  <p class="lp-partner-role">{s.cargo}</p>
+                  <p class="lp-partner-name">{s.nome}</p>
+                  {s.bio && <p class="lp-partner-bio">{s.bio}</p>}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── MÉTRICAS ───────────────────────────────────────── -->
+    <Metrics />
+
+    <!-- ── DEPOIMENTOS ────────────────────────────────────── -->
+    <Testimonials />
+
+    <!-- ── FORMULÁRIO DE CONTATO ─────────────────────────── -->
+    <section id="contato" class="lp-cta-final">
+      <div class="lp-cta-rings" aria-hidden="true">
+        <div class="lp-ring" style="width:500px;height:500px;"></div>
+        <div class="lp-ring" style="width:340px;height:340px;"></div>
+        <div class="lp-ring" style="width:180px;height:180px;"></div>
+      </div>
+      <div class="section-inner">
+        <div class="lp-cta-inner">
+          <img
+            src="/assets/logo-vertical-light.png"
+            alt="Boulevard Arq & Con"
+            class="lp-cta-logo"
+            width="1319"
+            height="741"
+          />
+          <p class="label" style="margin-bottom: 1rem">Contato</p>
+          <h2>Pronto para começar?</h2>
+          <p class="lp-cta-sub">Antes de qualquer proposta, queremos conhecer você, entender o que deseja construir e apresentar como a Boulevard pode conduzir esse processo.</p>
+          <form class="lp-cta-form" id="lpCtaForm">
+            <input type="hidden" name="access_key" value="454d1f88-df26-4dc0-b7b7-6e8496c40ad0" />
+            <input type="hidden" name="subject" value="Novo contato — LP Boulevard" />
+            <input type="hidden" name="from_name" value="Site Boulevard" />
+            <input type="checkbox" name="botcheck" style="display: none;" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <div class="lp-form-row">
+              <input name="nome" type="text" required placeholder="Nome" autocomplete="name" />
+              <input name="telefone" type="tel" required placeholder="Telefone" autocomplete="tel" />
+            </div>
+            <select name="assunto" required>
+              <option value="" disabled selected>Assunto de interesse</option>
+              <option value="projeto">Projeto</option>
+              <option value="obra">Obra</option>
+            </select>
+            <textarea name="mensagem" rows="3" placeholder="Nos conte um pouco sobre o que gostaria de realizar"></textarea>
+            <button type="submit" class="btn btn-outline-light lp-form-submit">
+              Enviar mensagem
+            </button>
+            <p class="lp-form-status" id="lpFormStatus" hidden></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <FooterLP />
+</Layout>
+
+<style>
+  /* ── Hero ────────────────────────────────────────────── */
+  .lp-hero {
+    position: relative;
+    width: 100%;
+    min-height: 100dvh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+
+  .lp-hero-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center 40%;
+  }
+
+  .lp-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(24, 46, 48, 0.92) 0%,
+      rgba(24, 46, 48, 0.5) 45%,
+      rgba(24, 46, 48, 0.18) 100%
+    );
+  }
+
+  .lp-hero-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: calc(var(--max-w) + var(--section-pad-x) * 2);
+    margin: 0 auto;
+    padding: 0 var(--section-pad-x) 5rem;
+  }
+
+  .lp-hero-content h1 {
+    color: var(--offwhite);
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+    max-width: 20ch;
+  }
+
+  .lp-hero-subtitle {
+    font-size: clamp(15px, 1.4vw, 17px);
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(240, 239, 245, 0.68);
+    max-width: 500px;
+    margin-bottom: 2.5rem;
+  }
+
+  .lp-hero-ctas {
+    display: flex;
+    gap: 0.875rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 768px) {
+    .lp-hero-content {
+      padding: 0 var(--section-pad-x) 3.5rem;
+    }
+    .lp-hero-content h1 {
+      font-size: clamp(2.5rem, 9vw, 3.25rem);
+    }
+  }
+
+  /* ── Oculta botão flutuante de WhatsApp na LP ────────── */
+  :global(.waf-btn) { display: none !important; }
+
+  /* ── Faixa de qualificação ────────────────────────────── */
+  .lp-audience-strip {
+    background: var(--dourado);
+    padding: 1.625rem 0;
+    cursor: default;
+    transition: background 0.3s var(--ease-premium);
+  }
+
+  .lp-audience-strip:hover {
+    background: var(--dourado-h);
+  }
+
+  .lp-audience-inner {
+    display: flex;
+    justify-content: center;
+  }
+
+  .lp-audience-text {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--verde-dk);
+    text-align: center;
+  }
+
+  .lp-audience-text strong {
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+
+  /* ── Value Prop ───────────────────────────────────────── */
+  .lp-valueprop {
+    background: var(--branco);
+    padding: 7rem 0;
+  }
+
+  .lp-vp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 3rem;
+    border: 1px solid rgba(33, 62, 64, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .lp-vp-card {
+    padding: 3.25rem 3rem;
+    background: var(--branco);
+    position: relative;
+    transition: background 0.3s var(--ease-premium);
+  }
+
+  .lp-vp-card:first-child {
+    border-right: 1px solid rgba(33, 62, 64, 0.08);
+  }
+
+  .lp-vp-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--dourado);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s var(--ease-premium);
+  }
+
+  .lp-vp-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .lp-vp-card:hover {
+    background: var(--offwhite);
+  }
+
+  .lp-vp-num {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    color: var(--dourado);
+    margin-bottom: 1.25rem;
+  }
+
+  .lp-vp-title {
+    font-size: 1.625rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--verde);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .lp-vp-body {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+
+  @media (max-width: 768px) {
+    .lp-valueprop { padding: 5rem 0; }
+    .lp-vp-grid { grid-template-columns: 1fr; }
+    .lp-vp-card:first-child {
+      border-right: none;
+      border-bottom: 1px solid rgba(33, 62, 64, 0.08);
+    }
+    .lp-vp-card { padding: 2.5rem 1.75rem; }
+  }
+
+  /* ── Serviços ─────────────────────────────────────────── */
+  .lp-services {
+    background: var(--branco);
+    padding: 0 0 7rem;
+  }
+
+  .lp-services-header {
+    margin-bottom: 3rem;
+  }
+
+  .lp-services-title {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 600;
+    color: var(--verde);
+    letter-spacing: -0.01em;
+    margin-top: 1.25rem;
+  }
+
+  .lp-services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .lp-service-card {
+    background: var(--verde);
+    border-radius: 12px;
+    padding: 3.25rem 3rem;
+    display: flex;
+    flex-direction: column;
+    transition:
+      transform 0.4s var(--ease-premium),
+      box-shadow 0.4s var(--ease-premium);
+  }
+
+  .lp-service-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 44px rgba(0, 0, 0, 0.18);
+  }
+
+  .lp-service-num {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2.5rem, 4vw, 3.25rem);
+    color: var(--dourado);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  .lp-service-card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--branco);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .lp-service-body {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--muted-dk);
+    flex: 1;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .lp-services { padding: 0 0 5rem; }
+    .lp-services-grid { grid-template-columns: 1fr; }
+    .lp-service-card { padding: 2.5rem 1.75rem; }
+  }
+
+  /* ── Portfólio ────────────────────────────────────────── */
+  .lp-portfolio {
+    background: var(--offwhite);
+    padding: 7rem 0;
+  }
+
+  .lp-port-header {
+    margin-bottom: 3.25rem;
+  }
+
+  .lp-bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto auto;
+    gap: 1.25rem;
+  }
+
+  .lp-tile-large  { grid-column: span 7; grid-row: span 2; }
+  .lp-tile-wide   { grid-column: span 5; }
+  .lp-tile-standard { grid-column: span 4; }
+
+  .lp-project-card {
+    display: block;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--branco);
+    box-shadow: 0 2px 16px rgba(33, 62, 64, 0.08);
+    cursor: default;
+    position: relative;
+    transition: box-shadow 0.4s var(--ease-premium);
+  }
+
+  .lp-project-card:hover {
+    box-shadow: 0 10px 40px rgba(33, 62, 64, 0.14);
+  }
+
+  .lp-card-thumb {
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s var(--ease-premium);
+  }
+
+  .lp-tile-large .lp-card-thumb {
+    height: 100%;
+    position: absolute;
+    inset: 0;
+  }
+
+  .lp-tile-wide .lp-card-thumb,
+  .lp-tile-standard .lp-card-thumb {
+    height: 220px;
+  }
+
+  .lp-tile-large {
+    min-height: 420px;
+    position: relative;
+  }
+
+  .lp-tile-large .lp-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(24,46,48,0.88) 0%, rgba(24,46,48,0.2) 60%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+    opacity: 0;
+    transition: opacity 0.35s var(--ease-premium);
+  }
+
+  .lp-tile-large:hover .lp-card-overlay {
+    opacity: 1;
+  }
+
+  .lp-tile-large .lp-card-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(to top, rgba(24,46,48,0.9) 0%, transparent 100%);
+    transition: opacity 0.35s var(--ease-premium);
+  }
+
+  .lp-tile-large:hover .lp-card-info {
+    opacity: 0;
+  }
+
+  .lp-tile-large .lp-card-info .lp-card-tag,
+  .lp-tile-large .lp-card-info .lp-card-title {
+    color: rgba(240, 239, 245, 0.9);
+  }
+
+  .lp-tile-large .lp-card-info .lp-card-meta {
+    color: rgba(240, 239, 245, 0.55);
+  }
+
+  .lp-tile-wide .lp-card-overlay,
+  .lp-tile-standard .lp-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 220px;
+    background: rgba(33, 62, 64, 0.78);
+    opacity: 0;
+    transition: opacity 0.3s var(--ease-premium);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .lp-project-card:hover .lp-card-overlay {
+    opacity: 1;
+  }
+
+  .lp-project-card:hover .lp-card-thumb {
+    transform: scale(1.04);
+  }
+
+  .lp-ov-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--offwhite);
+    letter-spacing: 0.03em;
+  }
+
+  .lp-ov-tag {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dourado);
+  }
+
+  .lp-card-info {
+    padding: 1rem 1.125rem 1.125rem;
+  }
+
+  .lp-tile-large .lp-card-info {
+    padding: 1.25rem 2rem;
+  }
+
+  .lp-card-tag {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--dourado);
+    margin-bottom: 4px;
+  }
+
+  .lp-card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--verde);
+    margin-bottom: 4px;
+  }
+
+  .lp-card-meta {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--muted);
+  }
+
+  @media (max-width: 768px) {
+    .lp-portfolio { padding: 5rem 0; }
+    .lp-bento-grid { grid-template-columns: 1fr; }
+    .lp-tile-large,
+    .lp-tile-wide,
+    .lp-tile-standard { grid-column: 1 / -1; grid-row: auto; }
+    .lp-tile-large { min-height: auto; }
+    .lp-tile-large .lp-card-thumb { position: static; height: 260px; }
+    .lp-tile-large .lp-card-overlay { display: none; }
+    .lp-tile-large .lp-card-info {
+      position: static;
+      background: none;
+      padding: 1rem 1.125rem 1.125rem;
+    }
+    .lp-tile-large .lp-card-info .lp-card-tag,
+    .lp-tile-large .lp-card-info .lp-card-title { color: var(--verde); }
+    .lp-tile-large .lp-card-info .lp-card-meta { color: var(--muted); }
+    .lp-tile-wide .lp-card-thumb,
+    .lp-tile-standard .lp-card-thumb { height: 220px; }
+  }
+
+  /* ── Sobre ────────────────────────────────────────────── */
+  .lp-about {
+    background: var(--branco);
+    padding: 7rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lp-about-watermark {
+    position: absolute;
+    left: -80px;
+    top: -60px;
+    opacity: 0.035;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .lp-about-grid {
+    display: grid;
+    grid-template-columns: 5fr 6fr;
+    gap: 4.5rem;
+    margin-top: 3rem;
+    align-items: start;
+  }
+
+  .lp-about-text h2 {
+    margin-bottom: 1.75rem;
+    max-width: 16ch;
+  }
+
+  .lp-about-body {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--muted);
+    margin-bottom: 1.25rem;
+    max-width: 52ch;
+  }
+
+  .lp-about-body:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .lp-about-partners {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .lp-partner-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--branco);
+    border: 1px solid rgba(33, 62, 64, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.7s var(--ease-premium) calc(var(--i, 0) * 90ms + 0.1s),
+      transform 0.7s var(--ease-premium) calc(var(--i, 0) * 90ms + 0.1s);
+  }
+
+  .lp-partner-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .lp-partner-photo {
+    aspect-ratio: 4 / 5;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(202, 155, 88, 0.08), transparent 60%),
+      linear-gradient(135deg, var(--offwhite) 0%, rgba(33, 62, 64, 0.05) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lp-partner-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .lp-partner-photo::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--dourado);
+    opacity: 0.35;
+  }
+
+  .lp-partner-initial {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(4.5rem, 7vw, 6.5rem);
+    color: var(--dourado);
+    opacity: 0.55;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .lp-partner-info {
+    padding: 1.5rem 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .lp-partner-role {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dourado);
+  }
+
+  .lp-partner-name {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.1;
+    color: var(--verde);
+    letter-spacing: 0.005em;
+  }
+
+  .lp-partner-bio {
+    margin-top: 0.85rem;
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  @media (max-width: 1024px) {
+    .lp-about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .lp-about-text h2 { max-width: none; }
+  }
+
+  @media (max-width: 640px) {
+    .lp-about { padding: 5rem 0; }
+    .lp-about-partners { grid-template-columns: 1fr; }
+    .lp-about-watermark { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lp-partner-card { opacity: 1; transform: none; transition: none; }
+  }
+
+  /* ── Formulário de contato ────────────────────────────── */
+  .lp-cta-final {
+    background: var(--verde);
+    padding: 7rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lp-cta-rings {
+    position: absolute;
+    right: -80px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .lp-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(202, 155, 88, 0.12);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .lp-cta-inner {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .lp-cta-logo {
+    height: 140px;
+    width: auto;
+    margin: 0 auto 2.5rem;
+    display: block;
+    object-fit: contain;
+  }
+
+  .lp-cta-final h2 {
+    color: var(--offwhite);
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    letter-spacing: 0.02em;
+    margin-bottom: 1.25rem;
+  }
+
+  .lp-cta-sub {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(240, 239, 245, 0.6);
+    margin-bottom: 2.5rem;
+  }
+
+  .lp-cta-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    text-align: left;
+  }
+
+  .lp-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.875rem;
+  }
+
+  .lp-cta-form input[type="text"],
+  .lp-cta-form input[type="tel"],
+  .lp-cta-form select,
+  .lp-cta-form textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    color: var(--offwhite);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 300;
+    padding: 13px 16px;
+    outline: none;
+    transition: border-color 0.2s var(--ease-premium);
+  }
+
+  .lp-cta-form input::placeholder,
+  .lp-cta-form textarea::placeholder {
+    color: rgba(240, 239, 245, 0.35);
+  }
+
+  .lp-cta-form select {
+    appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(240,239,245,0.4)' stroke-width='2' stroke-linecap='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+
+  .lp-cta-form select option {
+    background: var(--verde);
+    color: var(--offwhite);
+  }
+
+  .lp-cta-form textarea {
+    resize: none;
+    line-height: 1.65;
+  }
+
+  .lp-cta-form input:focus,
+  .lp-cta-form select:focus,
+  .lp-cta-form textarea:focus {
+    border-color: var(--dourado);
+  }
+
+  .lp-form-submit {
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.25rem;
+  }
+
+  .lp-form-status {
+    font-size: 13px;
+    font-weight: 400;
+    text-align: center;
+    padding: 10px;
+    border-radius: 6px;
+  }
+
+  .lp-form-status[data-ok] {
+    background: rgba(37, 211, 102, 0.1);
+    color: #4ade80;
+    border: 1px solid rgba(37, 211, 102, 0.2);
+  }
+
+  .lp-form-status[data-err] {
+    background: rgba(255, 100, 80, 0.1);
+    color: #f87171;
+    border: 1px solid rgba(255, 100, 80, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    .lp-cta-final { padding: 5rem 0; }
+    .lp-cta-rings { display: none; }
+    .lp-cta-logo { height: 110px; }
+    .lp-form-row { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('lpCtaForm') as HTMLFormElement | null;
+  const status = document.getElementById('lpFormStatus') as HTMLElement | null;
+
+  if (form && status) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector<HTMLButtonElement>('[type="submit"]')!;
+      const origText = btn.textContent ?? '';
+      btn.disabled = true;
+      btn.textContent = 'Enviando…';
+      try {
+        const data = Object.fromEntries(new FormData(form));
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const json = await res.json();
+        status.hidden = false;
+        status.removeAttribute('data-err');
+        status.removeAttribute('data-ok');
+        if (res.ok && json.success) {
+          status.setAttribute('data-ok', '');
+          status.textContent = 'Mensagem enviada! Retornaremos em até 48 horas.';
+          form.reset();
+        } else {
+          status.setAttribute('data-err', '');
+          status.textContent = json.message ?? 'Erro ao enviar. Tente novamente.';
+        }
+      } catch {
+        status.hidden = false;
+        status.setAttribute('data-err', '');
+        status.textContent = 'Falha na conexão. Tente novamente mais tarde.';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = origText;
+      }
+    });
+  }
+
+  const cards = document.querySelectorAll<HTMLElement>('.lp-partner-card');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        (entry.target as HTMLElement).classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.25 }
+  );
+
+  cards.forEach((card) => observer.observe(card));
+</script>

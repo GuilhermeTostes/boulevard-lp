@@ -1,0 +1,525 @@
+---
+import sobre from '../../content/sobre.json';
+import sobrePagina from '../../content/sobre_pagina.json';
+import { geocodeAddress } from '../../lib/geocode';
+
+const i = sobrePagina.institucional;
+const m = sobrePagina.mapa;
+const rotulo = m.rotulo_marcador ?? 'Boulevard Arq & Con';
+const endereco = m.endereco_completo ?? '';
+
+const FALLBACK = { lat: -21.1775, lng: -47.8103 };
+const ZOOM = 17;
+
+const geo = await geocodeAddress(endereco);
+const lat = geo?.lat ?? FALLBACK.lat;
+const lng = geo?.lng ?? FALLBACK.lng;
+if (!geo) {
+  console.warn(`[SobreCore] Geocoding falhou para "${endereco}" — usando coordenadas fallback.`);
+}
+
+const blocos = [
+  { label: i.ano_fundacao_label, value: i.ano_fundacao, kind: 'serif' },
+  { label: i.filosofia_label, value: i.filosofia, kind: 'text' },
+  { label: i.posicionamento_label, value: i.posicionamento, kind: 'text' },
+  { label: i.endereco_label, value: i.endereco, kind: 'text' },
+];
+---
+
+<section class="sobre-core">
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+
+  <div class="section-inner">
+    <div class="sobre-core-grid">
+      <!-- Coluna esquerda: card institucional + mapa embarcado -->
+      <article class="inst-card">
+        <div class="inst-grid">
+          {blocos.map((b) => (
+            <div class={`inst-block inst-block--${b.kind}`}>
+              <p class="inst-label">{b.label}</p>
+              <p class="inst-value">{b.value}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="inst-map-wrap">
+          <div
+            class="inst-map"
+            id="sobreMap"
+            data-lat={lat}
+            data-lng={lng}
+            data-zoom={ZOOM}
+            data-label={rotulo}
+            aria-label={`Mapa da sede: ${i.endereco}`}
+          ></div>
+          <button type="button" class="inst-map-link" id="sobreMapBtn">
+            <span>Abrir no mapa</span>
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- Coluna direita: cards dos sócios empilhados -->
+      <div class="partners-col">
+        {sobre.socios.map((s, idx) => (
+          <article class="partner-card" style={`--i:${idx}`}>
+            <div class="partner-photo" aria-hidden={s.foto ? undefined : 'true'}>
+              {s.foto ? (
+                <img src={s.foto} alt={s.nome} loading="lazy" />
+              ) : (
+                <span class="partner-initial">{s.nome.trim().charAt(0).toUpperCase()}</span>
+              )}
+            </div>
+            <div class="partner-info">
+              <p class="partner-role">{s.cargo}</p>
+              <p class="partner-name">{s.nome}</p>
+              {s.bio && <p class="partner-bio">{s.bio}</p>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sobre-core {
+    background: var(--branco);
+    padding: 5rem 0 6rem;
+  }
+
+  .sobre-core-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+
+  /* ── Card institucional (esquerda, ~60%) ─────────────────── */
+  .inst-card {
+    background: var(--verde);
+    border-radius: 16px;
+    padding: clamp(2.25rem, 3.5vw, 3rem);
+    color: var(--offwhite);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 2.25rem;
+  }
+
+  .inst-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: clamp(2.25rem, 3.5vw, 3rem);
+    width: 36px;
+    height: 1.5px;
+    background: var(--dourado);
+  }
+
+  .inst-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1.75rem 2.5rem;
+  }
+
+  .inst-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .inst-block--serif {
+    grid-row: span 3;
+    border-right: 1px solid rgba(202, 155, 88, 0.18);
+    padding-right: 1.75rem;
+    justify-content: flex-start;
+  }
+
+  .inst-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dourado);
+  }
+
+  .inst-block--serif .inst-value {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2.75rem, 4.5vw, 4rem);
+    line-height: 1;
+    color: var(--dourado);
+    letter-spacing: -0.02em;
+  }
+
+  .inst-block--text .inst-value {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(240, 239, 245, 0.78);
+    max-width: 56ch;
+  }
+
+  /* ── Mapa embarcado dentro do card ───────────────────────── */
+  .inst-map-wrap {
+    position: relative;
+    z-index: 0;
+    isolation: isolate;
+    margin-top: auto;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(202, 155, 88, 0.22);
+    background: var(--offwhite);
+  }
+
+  .inst-map {
+    width: 100%;
+    height: 220px;
+    background: var(--offwhite);
+  }
+
+  /* Tons quentes nos tiles para alinhar com a paleta */
+  .inst-map :global(.leaflet-tile-pane) {
+    filter: saturate(0.78) sepia(0.18) hue-rotate(-12deg) brightness(0.97);
+  }
+
+  .inst-map :global(.leaflet-control-attribution) {
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--muted);
+    font-size: 10px;
+  }
+
+  .inst-map :global(.leaflet-control-zoom a) {
+    background: var(--verde);
+    color: var(--offwhite);
+    border-color: rgba(202, 155, 88, 0.3);
+  }
+
+  .inst-map :global(.leaflet-control-zoom a:hover) {
+    background: var(--verde-dk);
+  }
+
+  .inst-map :global(.bv-marker) {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .inst-map :global(.bv-marker .bv-pin) {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--dourado);
+    border: 3px solid var(--verde-dk);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  }
+
+  .inst-map :global(.bv-marker .bv-pulse) {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(202, 155, 88, 0.55);
+    animation: bvPulse 2.4s ease-out infinite;
+  }
+
+  @keyframes bvPulse {
+    0% { transform: scale(0.8); opacity: 0.7; }
+    80%, 100% { transform: scale(1.6); opacity: 0; }
+  }
+
+  .inst-map-link {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.875rem 1.25rem;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dourado);
+    background: rgba(0, 0, 0, 0.18);
+    border: none;
+    border-top: 1px solid rgba(202, 155, 88, 0.22);
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.3s var(--ease-premium);
+  }
+
+  .inst-map-link:hover {
+    background: rgba(0, 0, 0, 0.28);
+  }
+
+  /* ── Coluna dos sócios (direita, ~40%) ───────────────────── */
+  .partners-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    min-width: 0;
+  }
+
+  .partner-card {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    background: var(--branco);
+    border: 1px solid rgba(33, 62, 64, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.7s var(--ease-premium) calc(var(--i, 0) * 90ms + 0.1s),
+      transform 0.7s var(--ease-premium) calc(var(--i, 0) * 90ms + 0.1s),
+      box-shadow 0.4s var(--ease-premium),
+      translate 0.4s var(--ease-premium);
+  }
+
+  .partner-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .partner-card:hover {
+    box-shadow: 0 14px 44px rgba(33, 62, 64, 0.1);
+    translate: 0 -3px;
+  }
+
+  .partner-photo {
+    flex: 0 0 38%;
+    aspect-ratio: 1;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(202, 155, 88, 0.08), transparent 60%),
+      linear-gradient(135deg, var(--branco) 0%, rgba(33, 62, 64, 0.05) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .partner-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .partner-photo::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--dourado);
+    opacity: 0.35;
+  }
+
+  .partner-initial {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    color: var(--dourado);
+    opacity: 0.55;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .partner-info {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    justify-content: center;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .partner-role {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dourado);
+  }
+
+  .partner-name {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.375rem;
+    line-height: 1.15;
+    color: var(--verde);
+  }
+
+  .partner-bio {
+    margin-top: 0.45rem;
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  /* ── Tablet: ainda 2 colunas mas mais estreitas ──────────── */
+  @media (max-width: 1100px) {
+    .inst-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .inst-block--serif {
+      grid-row: auto;
+      border-right: none;
+      padding-right: 0;
+      border-bottom: 1px solid rgba(202, 155, 88, 0.18);
+      padding-bottom: 1.25rem;
+    }
+  }
+
+  /* ── Mobile: empilha tudo em uma coluna ──────────────────── */
+  @media (max-width: 860px) {
+    .sobre-core {
+      padding: 3.5rem 0 4.5rem;
+    }
+    .sobre-core-grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    .inst-card {
+      padding: 2.25rem 1.5rem;
+    }
+    .inst-card::before {
+      left: 1.5rem;
+    }
+    .inst-map {
+      height: 260px;
+    }
+    .partner-photo {
+      flex: 0 0 35%;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .partner-card {
+      flex-direction: column;
+    }
+    .partner-photo {
+      flex: 0 0 auto;
+      width: 100%;
+      aspect-ratio: 16 / 11;
+    }
+    .partner-info {
+      padding: 1.25rem 1.25rem 1.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .partner-card {
+      opacity: 1;
+      transform: none;
+    }
+    .inst-map :global(.bv-marker .bv-pulse) {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  import { loadLeaflet, buildMapsLink } from './leafletLoader.ts';
+
+  function showMapFallback(el: HTMLElement) {
+    const fallback = document.createElement('div');
+    fallback.style.display = 'flex';
+    fallback.style.alignItems = 'center';
+    fallback.style.justifyContent = 'center';
+    fallback.style.height = '100%';
+    fallback.style.color = 'var(--muted)';
+    fallback.style.fontSize = '14px';
+    fallback.textContent = 'Mapa indisponível no momento.';
+    el.replaceChildren(fallback);
+  }
+
+  async function initMap() {
+    const el = document.getElementById('sobreMap');
+    const btn = document.getElementById('sobreMapBtn') as HTMLButtonElement | null;
+    if (!el) return;
+
+    const lat = parseFloat(el.dataset.lat ?? '0');
+    const lng = parseFloat(el.dataset.lng ?? '0');
+    const zoom = parseInt(el.dataset.zoom ?? '17', 10);
+    const label = el.dataset.label ?? 'Boulevard Arq & Con';
+
+    if (Number.isNaN(lat) || Number.isNaN(lng)) return;
+
+    const mapsUrl = buildMapsLink(lat, lng);
+    if (btn) {
+      btn.addEventListener('click', () => {
+        window.open(mapsUrl, '_blank', 'noopener');
+      });
+    }
+
+    try {
+      const L = await loadLeaflet();
+
+      const map = L.map(el, {
+        center: [lat, lng],
+        zoom,
+        zoomControl: true,
+        scrollWheelZoom: false,
+      });
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap &copy; CARTO',
+        subdomains: 'abcd',
+        maxZoom: 19,
+      }).addTo(map);
+
+      const icon = L.divIcon({
+        className: 'bv-marker',
+        html: '<span class="bv-pulse"></span><span class="bv-pin"></span>',
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+      });
+
+      const marker = L.marker([lat, lng], { icon, title: label }).addTo(map);
+      marker.on('click', () => window.open(mapsUrl, '_blank', 'noopener'));
+    } catch (err) {
+      console.error(err);
+      showMapFallback(el);
+    }
+  }
+
+  // Animação de entrada dos cards de sócios
+  const cards = document.querySelectorAll<HTMLElement>('.sobre-core .partner-card');
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        (entry.target as HTMLElement).classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.25 }
+  );
+  cards.forEach((card) => observer.observe(card));
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMap);
+  } else {
+    initMap();
+  }
+</script>

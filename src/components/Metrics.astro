@@ -1,0 +1,266 @@
+---
+import { getCollection } from 'astro:content';
+
+const allMetricas = await getCollection('metricas');
+const metricas = allMetricas.sort((a, b) => a.data.ordem - b.data.ordem);
+---
+
+<!-- D7: M2 — números em Fraunces italic + count-up animation -->
+<section id="metricas" class="metrics">
+  <div class="metrics-watermark" aria-hidden="true">
+    <img src="/assets/symbol-gold.png" alt="" width="440" height="440" />
+  </div>
+  <div class="section-inner">
+    <div class="metrics-grid">
+      {metricas.map((m, idx) => (
+        <div class={`metric ${idx === 0 ? 'metric--first' : ''}`}>
+          <p class="m-num">
+            <span class="m-value" data-target={m.data.numero}>{m.data.numero}</span>
+            {m.data.sufixo && (
+              <span class="m-sufixo">{m.data.sufixo}</span>
+            )}
+          </p>
+          <div class="m-line"></div>
+          <p class="m-label">{m.data.label}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .metrics {
+    background: var(--verde);
+    padding: 7rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .metrics-watermark {
+    position: absolute;
+    right: -60px;
+    bottom: -60px;
+    opacity: 0.04;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .metric {
+    padding-left: 2rem;
+    border-left: 1px solid rgba(202, 155, 88, 0.2);
+  }
+
+  .metric--first {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  /* D7: Fraunces italic nos números */
+  .m-num {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(4rem, 6.5vw, 7rem);
+    color: var(--dourado);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.1em;
+  }
+
+  .m-value {
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    display: inline-block;
+  }
+
+  .m-sufixo {
+    font-size: 0.55em;
+    letter-spacing: 0;
+    margin-bottom: 0.05em;
+  }
+
+  .m-line {
+    width: 28px;
+    height: 1px;
+    background: var(--dourado);
+    opacity: 0.4;
+    margin-bottom: 0.875rem;
+    transform-origin: left;
+  }
+
+  .m-label {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.55;
+    color: rgba(240, 239, 245, 0.6);
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Estado inicial (antes da animação entrar) ─────────── */
+  .metric .m-num {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.7s var(--ease-premium),
+      transform 0.7s var(--ease-premium);
+  }
+
+  .metric .m-line {
+    transform: scaleX(0);
+    transition: transform 0.6s var(--ease-premium) 0.2s;
+  }
+
+  .metric .m-label {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 0.6s var(--ease-premium) 0.35s,
+      transform 0.6s var(--ease-premium) 0.35s;
+  }
+
+  /* ── Estado visível ────────────────────────────────────── */
+  .metric.is-visible .m-num {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .metric.is-visible .m-line {
+    transform: scaleX(1);
+  }
+
+  .metric.is-visible .m-label {
+    opacity: 0.6;
+    transform: translateY(0);
+  }
+
+  /* stagger entre métricas */
+  .metric:nth-child(2) .m-num { transition-delay: 0.08s; }
+  .metric:nth-child(2) .m-line { transition-delay: 0.28s; }
+  .metric:nth-child(2) .m-label { transition-delay: 0.43s; }
+
+  .metric:nth-child(3) .m-num { transition-delay: 0.16s; }
+  .metric:nth-child(3) .m-line { transition-delay: 0.36s; }
+  .metric:nth-child(3) .m-label { transition-delay: 0.51s; }
+
+  .metric:nth-child(4) .m-num { transition-delay: 0.24s; }
+  .metric:nth-child(4) .m-line { transition-delay: 0.44s; }
+  .metric:nth-child(4) .m-label { transition-delay: 0.59s; }
+
+  @media (max-width: 768px) {
+    .metrics {
+      padding: 5rem 0;
+    }
+    .metrics-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem 2rem;
+    }
+    .metric {
+      border-left: none;
+      padding-left: 0;
+    }
+    .metric:nth-child(2n) {
+      border-left: 1px solid rgba(202, 155, 88, 0.2);
+      padding-left: 1.5rem;
+    }
+    .m-num {
+      font-size: clamp(3.5rem, 13vw, 5.5rem);
+    }
+    /* reset stagger para mobile (2-col: dispara aos pares) */
+    .metric:nth-child(2) .m-num { transition-delay: 0.08s; }
+    .metric:nth-child(3) .m-num { transition-delay: 0.08s; }
+    .metric:nth-child(4) .m-num { transition-delay: 0.16s; }
+  }
+
+  @media (max-width: 480px) {
+    .metrics-grid {
+      grid-template-columns: 1fr;
+    }
+    .metric:nth-child(2n) {
+      border-left: none;
+      padding-left: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .metric .m-num,
+    .metric .m-line,
+    .metric .m-label {
+      transition: none;
+      opacity: 1;
+      transform: none;
+    }
+    .metric .m-line {
+      transform: scaleX(1);
+    }
+    .metric .m-label {
+      opacity: 0.6;
+    }
+  }
+</style>
+
+<script>
+  const DURATION = 1800;
+
+  function easeOutCubic(t: number): number {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function animateCountUp(valueEl: HTMLElement, target: number) {
+    const start = performance.now();
+    const isInt = Number.isInteger(target);
+
+    function tick(now: number) {
+      const progress = Math.min((now - start) / DURATION, 1);
+      const eased = easeOutCubic(progress);
+      const current = eased * target;
+      valueEl.textContent = isInt ? String(Math.floor(current)) : current.toFixed(1);
+      if (progress < 1) requestAnimationFrame(tick);
+      else valueEl.textContent = String(target);
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  const metrics = document.querySelectorAll<HTMLElement>('.metric');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+
+        const metric = entry.target as HTMLElement;
+        metric.classList.add('is-visible');
+
+        if (!prefersReduced) {
+          const valueEl = metric.querySelector<HTMLElement>('.m-value');
+          if (valueEl) {
+            const raw = valueEl.dataset.target ?? '';
+            const target = parseFloat(raw);
+            if (!isNaN(target) && target > 0) {
+              const finalStr = Number.isInteger(target) ? String(target) : target.toFixed(1);
+              valueEl.style.minWidth = `${finalStr.length}ch`;
+              valueEl.textContent = '0';
+              animateCountUp(valueEl, target);
+            }
+          }
+        }
+
+        observer.unobserve(metric);
+      });
+    },
+    { threshold: 0.4 }
+  );
+
+  metrics.forEach((m) => observer.observe(m));
+</script>

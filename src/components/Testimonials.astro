@@ -1,0 +1,209 @@
+---
+import { getCollection } from 'astro:content';
+import textos from '../content/textos.json';
+
+const allDepoimentos = await getCollection('depoimentos');
+const dep = textos.depoimentos;
+---
+
+<section id="depoimentos" class="testimonials">
+  <div class="testimonials-watermark" aria-hidden="true">
+    <img src="/assets/symbol-gold.png" alt="" width="360" height="360" />
+  </div>
+  <div class="section-inner">
+    <p class="label">{dep.eyebrow}</p>
+    <div class="gold-line"></div>
+    <h2 class="preserve-lines">{dep.titulo}</h2>
+
+    <div class="dep-grid">
+      {allDepoimentos.map((d, i) => (
+        <article class="dep-card" style={`--i:${i}`}>
+          <span class="dep-quote" aria-hidden="true">&ldquo;</span>
+          <p class="dep-text">{d.data.texto}</p>
+          <div class="dep-divider"></div>
+          <div class="dep-author">
+            <div class="dep-initial" aria-hidden="true">
+              {d.data.nome.trim().charAt(0).toUpperCase()}
+            </div>
+            <div>
+              <p class="dep-name">{d.data.nome}</p>
+              <p class="dep-role">{d.data.cargo_projeto}</p>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials {
+    background: var(--offwhite);
+    padding: 7rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .testimonials-watermark {
+    position: absolute;
+    right: -40px;
+    bottom: -40px;
+    opacity: 0.035;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .testimonials h2 {
+    margin-bottom: 3.25rem;
+    max-width: 22ch;
+  }
+
+  /* ── 3-column equal grid ──────────────────────────────── */
+  .dep-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .dep-card {
+    background: var(--branco);
+    border: 1px solid rgba(33, 62, 64, 0.08);
+    border-radius: 12px;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    cursor: default;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s var(--ease-premium) calc(var(--i, 0) * 80ms),
+      transform 0.6s var(--ease-premium) calc(var(--i, 0) * 80ms),
+      box-shadow 0.4s var(--ease-premium),
+      translate 0.4s var(--ease-premium);
+  }
+
+  .dep-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .dep-card:hover {
+    box-shadow: 0 10px 40px rgba(33, 62, 64, 0.1);
+    translate: 0 -3px;
+  }
+
+  .dep-quote {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 3.5rem;
+    line-height: 0.75;
+    color: var(--dourado);
+    opacity: 0.5;
+    display: block;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.02em;
+  }
+
+  .dep-text {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--verde);
+    letter-spacing: 0.01em;
+    flex: 1;
+    margin-bottom: 1.75rem;
+  }
+
+  .dep-divider {
+    width: 28px;
+    height: 1px;
+    background: var(--dourado);
+    opacity: 0.4;
+    margin-bottom: 1.25rem;
+  }
+
+  .dep-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .dep-initial {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--dourado);
+    color: var(--branco);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .dep-name {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--verde);
+    letter-spacing: 0.02em;
+  }
+
+  .dep-role {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* ── Responsivo ───────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .dep-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .testimonials {
+      padding: 5rem 0;
+    }
+    .dep-grid {
+      grid-template-columns: 1fr;
+    }
+    .testimonials-watermark {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dep-card {
+      opacity: 1;
+      transform: none;
+      transition: box-shadow 0.3s ease, translate 0.3s ease;
+    }
+  }
+</style>
+
+<script>
+  const cards = document.querySelectorAll<HTMLElement>('.dep-card');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        (entry.target as HTMLElement).classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.25 }
+  );
+
+  cards.forEach((card) => observer.observe(card));
+</script>

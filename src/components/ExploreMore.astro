@@ -1,0 +1,124 @@
+---
+interface Card {
+  href: string;
+  titulo: string;
+  subtitulo: string;
+  cta?: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  titulo?: string;
+  cards: [Card, Card];
+}
+
+const { eyebrow = 'Continue explorando', titulo = 'Veja também', cards } = Astro.props;
+---
+
+<section class="explore">
+  <div class="section-inner">
+    <header class="explore-header">
+      <p class="label">{eyebrow}</p>
+      <div class="gold-line"></div>
+      <h2 class="explore-title">{titulo}</h2>
+    </header>
+
+    <div class="explore-grid">
+      {cards.map((c) => (
+        <a class="explore-card" href={c.href}>
+          <div class="explore-card-body">
+            <h3 class="explore-card-title">{c.titulo}</h3>
+            <p class="explore-card-sub">{c.subtitulo}</p>
+          </div>
+          <span class="explore-card-cta">
+            <span>{c.cta ?? 'Acessar'}</span>
+            <span aria-hidden="true">→</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .explore {
+    background: var(--offwhite);
+    padding: 5rem 0 6rem;
+    border-top: 1px solid rgba(202, 155, 88, 0.12);
+  }
+
+  .explore-header {
+    margin-bottom: 2.75rem;
+  }
+
+  .explore-title {
+    font-size: clamp(1.5rem, 2.2vw, 2rem);
+    font-weight: 600;
+    color: var(--verde);
+    letter-spacing: -0.01em;
+  }
+
+  .explore-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .explore-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+    background: var(--branco);
+    border: 1px solid var(--border-g);
+    border-radius: 12px;
+    padding: clamp(1.75rem, 2.5vw, 2.25rem);
+    transition:
+      transform 0.35s var(--ease-premium),
+      box-shadow 0.35s var(--ease-premium);
+  }
+
+  .explore-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 44px rgba(33, 62, 64, 0.1);
+  }
+
+  .explore-card-title {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1.25rem, 1.8vw, 1.6rem);
+    line-height: 1.2;
+    color: var(--verde);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .explore-card-sub {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 46ch;
+  }
+
+  .explore-card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dourado);
+  }
+
+  @media (max-width: 720px) {
+    .explore {
+      padding: 3.5rem 0 4.5rem;
+    }
+    .explore-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,275 @@
+---
+import configs from '../content/configs.json';
+import textos from '../content/textos.json';
+
+const telDisplay = configs.contato_tel.replace(/^\+55\s*/, '');
+---
+
+<header id="header" class="site-header">
+  <div class="header-logo">
+    <img src="/assets/logo-horizontal-light.png" alt="Boulevard Arq & Con" height="44" />
+  </div>
+
+  <div class="header-contacts" aria-label="Canais de contato">
+    <span class="contact-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+      </svg>
+      <span>{telDisplay}</span>
+    </span>
+    <span class="contact-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12.031 2C6.49 2 2 6.49 2 12.032c0 1.868.49 3.615 1.346 5.13L2 22l5.003-1.313A10.01 10.01 0 0 0 12.031 22C17.572 22 22 17.51 22 11.968 22 6.427 17.572 2 12.031 2ZM17.67 16.101c-.234.656-1.172 1.196-1.906 1.352-.508.105-1.172.188-3.406-.73-2.86-1.18-4.703-4.07-4.844-4.258-.136-.188-1.14-1.516-1.14-2.89 0-1.371.718-2.046 1.015-2.343.234-.234.621-.34.993-.34.12 0 .23.006.328.012.296.012.445.028.64.497.235.584.805 1.953.875 2.094.071.14.14.328.04.52-.094.2-.176.287-.316.445-.14.156-.274.277-.414.449-.128.152-.274.316-.113.613.163.296.72 1.183 1.546 1.914 1.063.945 1.93 1.242 2.25 1.374.234.095.516.071.687-.117.216-.234.48-.625.75-.992.187-.258.421-.293.667-.199.25.09 1.593.75 1.868.89.273.14.457.208.523.324.066.117.066.68-.168 1.336Z"/>
+      </svg>
+      <span>{telDisplay}</span>
+    </span>
+    <span class="contact-link contact-email">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+      </svg>
+      <span>{configs.contato_email}</span>
+    </span>
+  </div>
+
+  <a href="#contato" class="btn btn-primary header-cta">Solicitar Projeto</a>
+
+  <button class="hamburger" id="hamburger" aria-expanded="false" aria-label="Abrir menu">
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<div class="mobile-overlay" id="mobileOverlay" aria-hidden="true">
+  <div class="overlay-contacts" aria-label="Canais de contato">
+    <span class="overlay-link">{telDisplay}</span>
+    <span class="overlay-link">{configs.contato_email}</span>
+  </div>
+  <a href="#contato" class="btn btn-primary overlay-cta">Solicitar Projeto</a>
+</div>
+
+<style>
+  .site-header {
+    position: fixed;
+    top: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    width: max-content;
+    max-width: calc(100vw - 3rem);
+    padding: 0.5rem 1rem 0.5rem 1.25rem;
+    border-radius: 9999px;
+    background: rgba(33, 62, 64, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 4px 24px rgba(0, 0, 0, 0.22);
+    transition:
+      background 0.4s var(--ease-premium),
+      box-shadow 0.4s var(--ease-premium);
+  }
+
+  .site-header.scrolled {
+    background: rgba(24, 46, 48, 0.96);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 8px 32px rgba(0, 0, 0, 0.32);
+  }
+
+  .header-logo img {
+    display: block;
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .header-contacts {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: rgba(240, 239, 245, 0.72);
+    white-space: nowrap;
+    transition: color 0.2s var(--ease-premium);
+  }
+
+  .contact-link:hover {
+    color: var(--offwhite);
+  }
+
+  .contact-link svg {
+    flex-shrink: 0;
+    opacity: 0.7;
+  }
+
+  .header-cta {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.55rem 1.25rem;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 1000px) {
+    .contact-email { display: none; }
+  }
+
+  /* ── Hamburger ─────────────────────────────────────────── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--offwhite);
+    border-radius: 2px;
+    transform-origin: center;
+    transition:
+      transform 0.35s var(--ease-premium),
+      opacity 0.25s var(--ease-premium);
+  }
+
+  .site-header.menu-open .hamburger span:first-child {
+    transform: translateY(3.25px) rotate(45deg);
+  }
+  .site-header.menu-open .hamburger span:last-child {
+    transform: translateY(-3.25px) rotate(-45deg);
+  }
+
+  /* ── Mobile overlay ────────────────────────────────────── */
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 199;
+    background: var(--verde-dk);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transform: translateY(-100%);
+    transition: transform 0.45s var(--ease-premium);
+  }
+
+  .mobile-overlay.is-open {
+    transform: translateY(0);
+  }
+
+  .overlay-contacts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .overlay-link {
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: rgba(240, 239, 245, 0.72);
+    padding: 0.625rem 1rem;
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      color 0.2s var(--ease-premium),
+      opacity 0.35s var(--ease-premium),
+      transform 0.35s var(--ease-premium);
+  }
+
+  .mobile-overlay.is-open .overlay-link {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mobile-overlay.is-open .overlay-link:nth-child(1) { transition-delay: 0.05s; }
+  .mobile-overlay.is-open .overlay-link:nth-child(2) { transition-delay: 0.10s; }
+  .mobile-overlay.is-open .overlay-link:nth-child(3) { transition-delay: 0.15s; }
+
+  .overlay-link:hover {
+    color: var(--offwhite);
+  }
+
+  .overlay-cta {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.35s var(--ease-premium) 0.2s,
+      transform 0.35s var(--ease-premium) 0.2s;
+  }
+
+  .mobile-overlay.is-open .overlay-cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── Mobile breakpoint ─────────────────────────────────── */
+  @media (max-width: 768px) {
+    .header-contacts,
+    .header-cta {
+      display: none;
+    }
+    .hamburger {
+      display: flex;
+    }
+    .mobile-overlay {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  const header = document.getElementById('header');
+  const hamburger = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobileOverlay');
+
+  if (header) {
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 80);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  if (hamburger && overlay && header) {
+    const openMenu = () => {
+      header.classList.add('menu-open');
+      overlay.classList.add('is-open');
+      overlay.setAttribute('aria-hidden', 'false');
+      hamburger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+    const closeMenu = () => {
+      header.classList.remove('menu-open');
+      overlay.classList.remove('is-open');
+      overlay.setAttribute('aria-hidden', 'true');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+    hamburger.addEventListener('click', () => {
+      header.classList.contains('menu-open') ? closeMenu() : openMenu();
+    });
+    overlay.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+  }
+</script>

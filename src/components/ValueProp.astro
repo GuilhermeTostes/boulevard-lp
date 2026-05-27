@@ -1,0 +1,112 @@
+---
+import textos from '../content/textos.json';
+const vp = textos.value_prop;
+---
+
+<section class="value-prop">
+  <div class="section-inner">
+    <p class="label">{vp.eyebrow}</p>
+    <div class="gold-line"></div>
+    <div class="vp-grid">
+      <div class="vp-card">
+        <p class="vp-num">{vp.card1_numero}</p>
+        <h3 class="vp-title preserve-lines">{vp.card1_titulo}</h3>
+        <p class="vp-body">{vp.card1_body}</p>
+      </div>
+      <div class="vp-card">
+        <p class="vp-num">{vp.card2_numero}</p>
+        <h3 class="vp-title preserve-lines">{vp.card2_titulo}</h3>
+        <p class="vp-body">{vp.card2_body}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .value-prop {
+    background: var(--branco);
+    padding: 7rem 0;
+  }
+
+  .vp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 3rem;
+    border: 1px solid rgba(33, 62, 64, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .vp-card {
+    padding: 3.25rem 3rem;
+    background: var(--branco);
+    position: relative;
+    transition: background 0.3s var(--ease-premium);
+  }
+
+  .vp-card:first-child {
+    border-right: 1px solid rgba(33, 62, 64, 0.08);
+  }
+
+  .vp-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--dourado);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s var(--ease-premium);
+  }
+
+  .vp-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .vp-card:hover {
+    background: var(--offwhite);
+  }
+
+  .vp-num {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    color: var(--dourado);
+    margin-bottom: 1.25rem;
+  }
+
+  .vp-title {
+    font-size: 1.625rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--verde);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .vp-body {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+
+  @media (max-width: 768px) {
+    .value-prop {
+      padding: 5rem 0;
+    }
+    .vp-grid {
+      grid-template-columns: 1fr;
+    }
+    .vp-card:first-child {
+      border-right: none;
+      border-bottom: 1px solid rgba(33, 62, 64, 0.08);
+    }
+    .vp-card {
+      padding: 2.5rem 1.75rem;
+    }
+  }
+</style>

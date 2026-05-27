@@ -1,0 +1,68 @@
+---
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title = 'Boulevard Arq & Con — Arquitetura e Construção de Alto Padrão',
+  description = 'Do projeto às chaves. Arquitetura e construção integradas com rigor técnico e atenção a cada detalhe.',
+  image = 'https://www.boulevard-arqcon.com.br/OG_image.jpg',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:url" content="https://lp.boulevard-arqcon.com.br" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={image} />
+
+    <title>{title}</title>
+
+    <!-- Preload fonts -->
+    <link
+      rel="preload"
+      href="/fonts/Inter-Variable.ttf"
+      as="font"
+      type="font/truetype"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/Fraunces-Variable-Italic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <link rel="icon" type="image/png" href="/assets/symbol-gold.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body>
+    <slot />
+    <WhatsAppFloat />
+  </body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>

@@ -1,0 +1,160 @@
+---
+import textos from '../content/textos.json';
+
+const heroImage = textos.hero.imagem ?? 'https://picsum.photos/seed/boulevard-hero/1920/1280';
+---
+
+<section id="hero" class="hero">
+  <div
+    class="hero-bg"
+    role="img"
+    aria-label="Imagem de fundo institucional Boulevard"
+    style={`background-image: url('${heroImage}')`}
+  ></div>
+  <div class="hero-overlay"></div>
+
+  <div class="scroll-note" aria-hidden="true">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+
+  <div class="hero-content">
+    <p class="label">{textos.hero.eyebrow}</p>
+    <div class="gold-line" style="margin: 14px 0 24px"></div>
+    <h1 class="preserve-lines">{textos.hero.titulo}</h1>
+    <p class="hero-subtitle preserve-lines">{textos.hero.subtitulo}</p>
+    <div class="hero-ctas">
+      <a href="/#contato" class="btn btn-primary">{textos.hero.cta_primario}</a>
+      <a href="/portfolio" class="btn btn-outline-light">{textos.hero.cta_secundario}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    width: 100%;
+    min-height: 100dvh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+
+  /* Ken Burns: zoom suave e contínuo, com leve drift orgânico */
+  @keyframes kenburns {
+    0% {
+      transform: scale(1.05) translate(0, 0);
+    }
+    50% {
+      transform: scale(1.14) translate(-1.4%, -1%);
+    }
+    100% {
+      transform: scale(1.05) translate(0, 0);
+    }
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center 40%;
+    transform: scale(1.05);
+    will-change: transform;
+    animation: kenburns 24s ease-in-out infinite;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(24, 46, 48, 0.92) 0%,
+      rgba(24, 46, 48, 0.48) 45%,
+      rgba(24, 46, 48, 0.15) 100%
+    );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: calc(var(--max-w) + var(--section-pad-x) * 2);
+    margin: 0 auto;
+    padding: 0 var(--section-pad-x) 5rem;
+  }
+
+  .hero h1 {
+    color: var(--offwhite);
+    font-size: clamp(3.25rem, 6.5vw, 5.25rem);
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(15px, 1.4vw, 17px);
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(240, 239, 245, 0.68);
+    max-width: 440px;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 0.875rem;
+    flex-wrap: wrap;
+  }
+
+  /* scroll annotation */
+  .scroll-note {
+    position: absolute;
+    top: 6rem;
+    right: var(--section-pad-x);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .scroll-note span {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--offwhite);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: var(--offwhite);
+  }
+
+  @media (max-width: 768px) {
+    .scroll-note {
+      display: none;
+    }
+    .hero-content {
+      padding: 0 var(--section-pad-x) 3.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.75rem, 10vw, 3.5rem);
+    }
+    .hero-subtitle.preserve-lines {
+      white-space: normal;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-bg {
+      animation: none;
+      transform: scale(1);
+    }
+  }
+</style>

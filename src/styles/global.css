@@ -1,0 +1,256 @@
+/* ==========================================================================
+   Boulevard Arq & Con — Tokens, fontes e utilities
+   Sistema de design definido em: plan "desisti-da-ideia-do-tidy-marble.md"
+   ========================================================================== */
+
+/* ── FONTES ──────────────────────────────────────────────────────────────── */
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fraunces';
+  src: url('/fonts/Fraunces-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Fraunces';
+  src: url('/fonts/Fraunces-Variable-Italic.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ── RESET ───────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+img,
+picture,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+/* ── TOKENS ──────────────────────────────────────────────────────────────── */
+:root {
+  /* paleta */
+  --verde: #213e40;
+  --verde-dk: #182e30;
+  --dourado: #ca9b58;
+  --dourado-h: #b5894a;
+  --offwhite: #f0eff5;
+  --branco: #ffffff;
+
+  /* alphas */
+  --muted: rgba(33, 62, 64, 0.5);
+  --muted-dk: rgba(240, 239, 245, 0.6);
+  --border-g: rgba(202, 155, 88, 0.28);
+
+  /* tipografia */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+
+  /* layout */
+  --max-w: 1280px;
+  --section-pad-x: clamp(24px, 5vw, 56px);
+
+  /* motion */
+  --ease-premium: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* ── BODY ────────────────────────────────────────────────────────────────── */
+body {
+  font-family: var(--font-sans);
+  background: var(--offwhite);
+  color: var(--verde);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── UTILITIES ───────────────────────────────────────────────────────────── */
+.section-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--section-pad-x);
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--dourado);
+}
+
+.eyebrow-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: var(--dourado);
+}
+
+.gold-line {
+  width: 36px;
+  height: 1.5px;
+  background: var(--dourado);
+  margin: 12px 0 20px;
+}
+
+.preserve-lines {
+  white-space: pre-line;
+}
+
+/* ── BOTÕES (D8: pill) ───────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 0.875rem 2rem;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  transition:
+    background-color 0.4s var(--ease-premium),
+    border-color 0.4s var(--ease-premium),
+    color 0.4s var(--ease-premium),
+    transform 0.4s var(--ease-premium);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: var(--dourado);
+  color: var(--verde);
+}
+.btn-primary:hover {
+  background: var(--dourado-h);
+}
+
+.btn-primary-verde {
+  background: var(--verde);
+  color: var(--offwhite);
+}
+.btn-primary-verde:hover {
+  background: var(--verde-dk);
+}
+
+.btn-outline-light {
+  background: transparent;
+  border-color: rgba(240, 239, 245, 0.38);
+  color: rgba(240, 239, 245, 0.85);
+}
+.btn-outline-light:hover {
+  border-color: rgba(240, 239, 245, 0.7);
+  color: var(--branco);
+}
+
+.btn-outline-dark {
+  background: transparent;
+  border-color: var(--verde);
+  color: var(--verde);
+}
+.btn-outline-dark:hover {
+  background: var(--verde);
+  color: var(--offwhite);
+}
+
+.btn-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dourado);
+  border-bottom: 1px solid var(--border-g);
+  padding-bottom: 2px;
+  transition: gap 0.3s var(--ease-premium), color 0.3s var(--ease-premium);
+}
+.btn-text:hover {
+  gap: 12px;
+  color: var(--dourado-h);
+}
+
+/* ── HEADINGS ────────────────────────────────────────────────────────────── */
+h1,
+h2,
+h3,
+h4 {
+  color: var(--verde);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1;
+}
+
+h2 {
+  font-weight: 600;
+  font-size: clamp(2rem, 3vw, 2.75rem);
+}
+
+h3 {
+  font-weight: 600;
+  font-size: 1.625rem;
+}
+
+p {
+  font-weight: 300;
+}
+
+/* ── ACESSIBILIDADE ──────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

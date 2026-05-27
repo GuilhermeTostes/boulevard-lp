@@ -1,0 +1,128 @@
+---
+interface Props {
+  currentPage: number;
+  lastPage: number;
+  prevUrl?: string;
+  nextUrl?: string;
+  basePath?: string;
+}
+
+const { currentPage, lastPage, prevUrl, nextUrl, basePath = '/portfolio' } = Astro.props;
+
+function pageHref(n: number): string {
+  return n === 1 ? basePath : `${basePath}/${n}`;
+}
+
+const pages = Array.from({ length: lastPage }, (_, i) => i + 1);
+---
+
+{lastPage > 1 && (
+  <nav class="pagination" aria-label="Paginação dos projetos">
+    <div class="section-inner">
+      <ul class="pag-list">
+        <li>
+          {prevUrl ? (
+            <a href={prevUrl} class="pag-arrow" aria-label="Página anterior">
+              <span aria-hidden="true">←</span>
+            </a>
+          ) : (
+            <span class="pag-arrow is-disabled" aria-hidden="true">←</span>
+          )}
+        </li>
+
+        {pages.map((n) => (
+          <li>
+            {n === currentPage ? (
+              <span class="pag-num is-current" aria-current="page">{n}</span>
+            ) : (
+              <a href={pageHref(n)} class="pag-num">{n}</a>
+            )}
+          </li>
+        ))}
+
+        <li>
+          {nextUrl ? (
+            <a href={nextUrl} class="pag-arrow" aria-label="Próxima página">
+              <span aria-hidden="true">→</span>
+            </a>
+          ) : (
+            <span class="pag-arrow is-disabled" aria-hidden="true">→</span>
+          )}
+        </li>
+      </ul>
+    </div>
+  </nav>
+)}
+
+<style>
+  .pagination {
+    background: var(--offwhite);
+    padding: 1rem 0 4rem;
+  }
+
+  .pag-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .pag-num,
+  .pag-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 0.75rem;
+    border-radius: 8px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--verde);
+    background: transparent;
+    border: 1px solid transparent;
+    text-decoration: none;
+    transition:
+      background 0.25s var(--ease-premium),
+      color 0.25s var(--ease-premium),
+      border-color 0.25s var(--ease-premium),
+      transform 0.25s var(--ease-premium);
+  }
+
+  .pag-num:hover,
+  .pag-arrow:not(.is-disabled):hover {
+    color: var(--dourado);
+    border-color: var(--border-g);
+    transform: translateY(-1px);
+  }
+
+  .pag-num.is-current {
+    background: var(--dourado);
+    color: var(--branco);
+    border-color: var(--dourado);
+    cursor: default;
+  }
+
+  .pag-arrow.is-disabled {
+    color: rgba(33, 62, 64, 0.25);
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 480px) {
+    .pag-num,
+    .pag-arrow {
+      min-width: 36px;
+      height: 36px;
+      font-size: 13px;
+      padding: 0 0.5rem;
+    }
+    .pag-list {
+      gap: 0.35rem;
+    }
+  }
+</style>

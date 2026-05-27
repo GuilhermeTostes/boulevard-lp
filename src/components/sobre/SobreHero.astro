@@ -1,0 +1,70 @@
+---
+import sobre from '../../content/sobre_pagina.json';
+const h = sobre.hero;
+---
+
+<section class="sobre-hero">
+  <div class="sobre-hero-watermark" aria-hidden="true">
+    <img src="/assets/symbol-gold.png" alt="" width="520" height="520" />
+  </div>
+  <div class="section-inner">
+    <p class="label">{h.eyebrow}</p>
+    <div class="gold-line"></div>
+    <h1 class="preserve-lines">{h.titulo}</h1>
+    <p class="sobre-hero-lead">{h.subtitulo}</p>
+  </div>
+</section>
+
+<style>
+  .sobre-hero {
+    background: var(--verde);
+    padding: 11rem 0 7rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sobre-hero-watermark {
+    position: absolute;
+    right: clamp(-280px, -14vw, -160px);
+    top: clamp(-200px, -10vw, -120px);
+    width: min(900px, 70vw);
+    aspect-ratio: 1;
+    opacity: 0.05;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .sobre-hero-watermark img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .sobre-hero h1 {
+    color: var(--offwhite);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    max-width: 18ch;
+  }
+
+  .sobre-hero-lead {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(240, 239, 245, 0.7);
+    max-width: 60ch;
+  }
+
+  @media (max-width: 768px) {
+    .sobre-hero {
+      padding: 9rem 0 5rem;
+    }
+    .sobre-hero-watermark {
+      display: none;
+    }
+  }
+</style>

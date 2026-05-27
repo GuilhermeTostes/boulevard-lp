@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths, Page } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PortfolioGrid from '../../components/PortfolioGrid.astro';
+import Pagination from '../../components/Pagination.astro';
+import ExploreMore from '../../components/ExploreMore.astro';
+import CtaFinal from '../../components/CtaFinal.astro';
+
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+  const allProjetos = await getCollection('projetos');
+  const sorted = allProjetos.sort((a, b) => a.data.ordem - b.data.ordem);
+  return paginate(sorted, { pageSize: 12 });
+};
+
+interface Props {
+  page: Page<CollectionEntry<'projetos'>>;
+}
+
+const { page } = Astro.props;
+---
+
+<Layout
+  title={
+    page.currentPage === 1
+      ? 'Portfólio — Boulevard Arq & Con'
+      : `Portfólio — Página ${page.currentPage} — Boulevard Arq & Con`
+  }
+  description="Todos os projetos residenciais entregues pela Boulevard. Arquitetura e construção de alto padrão em São Paulo."
+>
+  <Header />
+  <main>
+    <PortfolioGrid showAll={true} projetos={page.data} />
+    <Pagination
+      currentPage={page.currentPage}
+      lastPage={page.lastPage}
+      prevUrl={page.url.prev}
+      nextUrl={page.url.next}
+    />
+    <ExploreMore
+      titulo="Explore mais"
+      cards={[
+        {
+          href: '/servicos',
+          titulo: 'Quer entender o que está por trás de cada projeto?',
+          subtitulo: 'Conheça nossa metodologia e os serviços que oferecemos.',
+        },
+        {
+          href: '/sobre',
+          titulo: 'Conheça a equipe',
+          subtitulo: 'Projetos com autoria e responsabilidade técnica direta dos sócios.',
+        },
+      ]}
+    />
+    <CtaFinal />
+  </main>
+  <Footer />
+</Layout>

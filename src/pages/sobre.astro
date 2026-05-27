@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+import ExploreMore from '../components/ExploreMore.astro';
+import SobreHero from '../components/sobre/SobreHero.astro';
+import SobreFilosofia from '../components/sobre/SobreFilosofia.astro';
+import SobreCore from '../components/sobre/SobreCore.astro';
+import Metrics from '../components/Metrics.astro';
+import SobreProcessoResumido from '../components/sobre/SobreProcessoResumido.astro';
+import SobreAreaAtuacao from '../components/sobre/SobreAreaAtuacao.astro';
+---
+
+<Layout
+  title="Sobre — Boulevard Arq & Con"
+  description="Quem somos, onde estamos e como conduzimos cada projeto — do briefing à entrega das chaves, com responsabilidade técnica direta dos sócios."
+>
+  <Header />
+  <main>
+    <SobreHero />
+    <SobreCore />
+    <SobreFilosofia />
+    <Metrics />
+    <SobreProcessoResumido />
+    <SobreAreaAtuacao />
+    <ExploreMore
+      titulo="Explore mais"
+      cards={[
+        {
+          href: '/servicos',
+          titulo: 'Entenda como trabalhamos',
+          subtitulo: 'Projeto e obra integrados, com processo estruturado do conceito à execução.',
+        },
+        {
+          href: '/portfolio',
+          titulo: 'Conheça nossos projetos',
+          subtitulo: 'Cada obra é uma expressão direta da nossa forma de projetar e construir.',
+        },
+      ]}
+    />
+    <CtaFinal />
+  </main>
+  <Footer />
+</Layout>

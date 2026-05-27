@@ -1,0 +1,52 @@
+{
+  "entries": [
+    {
+      "id": "Estéfano",
+      "nome": "Estéfano Cervo",
+      "cargo_projeto": "Apartamento Nova Aliança, 2024",
+      "texto": "Contratei a empresa para fazer uma reforma no meu apartamento em RP e gostaria de dizer que superou as minhas expectativas os trabalhos executados. Recomento a Boulevard Arquitetura e Construção.",
+      "avatar": "",
+      "featured": true
+    },
+    {
+      "id": "Mateus",
+      "nome": "Mateus Woszak",
+      "cargo_projeto": "Residência Jardins A+M, 2026",
+      "texto": "Fizemos nosso projeto arquitetônico com a Boulevard e foi um achado! Um trabalho sensacional! Lucas e Breno são excelentes no serviço que se propõem a fazer! Não pensem duas vezes se estão procurando realizar o sonho de construir sua casa! Chame-os!",
+      "avatar": "",
+      "featured": true
+    },
+    {
+      "id": "Lucia",
+      "nome": "Lucia Del Arco",
+      "cargo_projeto": "Apartamento Piazza, 2024",
+      "texto": "Foi muito bom trabalhar com esta empresa, sempre prontos a atender e serviço de qualidade, recomendo.",
+      "avatar": "",
+      "featured": false
+    },
+    {
+      "id": "Letícia",
+      "nome": "Letícia Vitorelo",
+      "cargo_projeto": "Residência Parque L+L, 2025",
+      "texto": "Super recomendo!! São super atenciosos e colocaram no papel exatamente como sonhávamos nossa casa!!",
+      "avatar": "",
+      "featured": true
+    },
+    {
+      "id": "Elen",
+      "nome": "Elen Giroto",
+      "cargo_projeto": "Residência Portinari, 2023",
+      "texto": "Excelentes profissionais, altamente qualificados e de confiança. Seus projetos são diferenciados e de muito bom gosto, souberam captar com paciência e muita dedicação o que queríamos.",
+      "avatar": "",
+      "featured": false
+    },
+    {
+      "id": "Gabriel",
+      "nome": "Gabriel Perez",
+      "cargo_projeto": "Residência Castelo, 2023",
+      "texto": "Equipe de primeira linha, qualidade garantida.\nPodem confiar!",
+      "avatar": "",
+      "featured": false
+    }
+  ]
+}

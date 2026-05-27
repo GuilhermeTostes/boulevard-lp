@@ -1,0 +1,254 @@
+---
+import sobrePagina from '../../content/sobre_pagina.json';
+const aa = sobrePagina.area_atuacao;
+---
+
+<section class="atuacao">
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <div class="section-inner">
+    <header class="atuacao-header">
+      <p class="label">{aa.eyebrow}</p>
+      <div class="gold-line"></div>
+      <h2 class="atuacao-title">{aa.titulo}</h2>
+      {aa.subtitulo && <p class="atuacao-sub">{aa.subtitulo}</p>}
+    </header>
+    <div class="atuacao-grid">
+      <div
+        class="atuacao-map"
+        id="atuacaoMap"
+        data-estados={JSON.stringify(aa.estados_destacados)}
+        aria-label="Mapa do Brasil com estados de atuação destacados"
+      ></div>
+      <div class="atuacao-cidades">
+        {aa.cidades.map((grupo) => (
+          <article class="cidade-card">
+            <p class="cidade-estado-label">{grupo.estado}</p>
+            <ul class="cidade-lista">
+              {grupo.lista.map((c) => <li>{c}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .atuacao {
+    background: var(--offwhite);
+    padding: 6rem 0 7rem;
+  }
+
+  .atuacao-header {
+    margin-bottom: 3.5rem;
+  }
+
+  .atuacao-title {
+    font-size: clamp(1.625rem, 2.5vw, 2.25rem);
+    font-weight: 600;
+    color: var(--verde);
+    letter-spacing: -0.01em;
+    margin-bottom: 0.875rem;
+  }
+
+  .atuacao-sub {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 56ch;
+  }
+
+  .atuacao-grid {
+    display: grid;
+    grid-template-columns: 1fr 440px;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  /* ── Mapa ─────────────────────────────────────────────── */
+  .atuacao-map {
+    position: relative;
+    z-index: 0;
+    isolation: isolate;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    max-height: 540px;
+    background: transparent;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  /* Oculta camada de tiles (sem tiles — mapa decorativo puro) */
+  .atuacao-map :global(.leaflet-tile-pane) {
+    display: none;
+  }
+
+  .atuacao-map :global(.leaflet-control-zoom),
+  .atuacao-map :global(.leaflet-control-attribution) {
+    display: none;
+  }
+
+  /* ── Grid de cards de cidades ─────────────────────────── */
+  .atuacao-cidades {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .cidade-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    padding: 1rem 1.125rem;
+    background: var(--branco);
+    border: 0.5px solid var(--border-g);
+    border-radius: 12px;
+  }
+
+  .cidade-estado-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dourado);
+    margin: 0;
+  }
+
+  .cidade-lista {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  .cidade-lista li {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  @media (max-width: 900px) {
+    .atuacao {
+      padding: 4.5rem 0 5.5rem;
+    }
+    .atuacao-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .atuacao-map {
+      max-height: 400px;
+    }
+    .atuacao-cidades {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .atuacao-cidades {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  /* Mapeamento codarea (IBGE) → sigla UF */
+  const CODAREA_TO_UF: Record<string, string> = {
+    '11': 'RO', '12': 'AC', '13': 'AM', '14': 'RR', '15': 'PA',
+    '16': 'AP', '17': 'TO', '21': 'MA', '22': 'PI', '23': 'CE',
+    '24': 'RN', '25': 'PB', '26': 'PE', '27': 'AL', '28': 'SE',
+    '29': 'BA', '31': 'MG', '32': 'ES', '33': 'RJ', '35': 'SP',
+    '41': 'PR', '42': 'SC', '43': 'RS', '50': 'MS', '51': 'MT',
+    '52': 'GO', '53': 'DF',
+  };
+
+  const COR_DESTAQUE = '#ca9b58';    /* --dourado */
+  const COR_NEUTRO   = 'rgba(33,62,64,0.15)'; /* --verde com baixa opacidade */
+  const COR_BORDA    = 'rgba(202,155,88,0.35)';
+
+  function showMapFallback(el: HTMLElement) {
+    const fallback = document.createElement('div');
+    fallback.style.display = 'flex';
+    fallback.style.alignItems = 'center';
+    fallback.style.justifyContent = 'center';
+    fallback.style.height = '100%';
+    fallback.style.color = 'var(--muted)';
+    fallback.style.fontSize = '14px';
+    fallback.textContent = 'Mapa indisponível no momento.';
+    el.replaceChildren(fallback);
+  }
+
+  async function initMapaBrasil() {
+    const el = document.getElementById('atuacaoMap');
+    if (!el) return;
+
+    const estadosDestacados: string[] = JSON.parse(el.dataset.estados ?? '[]');
+
+    try {
+      /* Carrega Leaflet (singleton compartilhado com SobreCore se ambos estiverem na página) */
+      let L = (window as any).L;
+      if (!L) {
+        const loading = (window as any).__leafletLoading;
+        if (loading) {
+          L = await loading;
+        } else {
+          L = await new Promise<any>((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+            s.crossOrigin = '';
+            s.onload = () => (window as any).L ? resolve((window as any).L) : reject();
+            s.onerror = reject;
+            document.head.appendChild(s);
+          });
+        }
+      }
+
+      /* GeoJSON dos estados */
+      const res = await fetch('/data/brasil-uf.geojson');
+      const geojson = await res.json();
+
+      const map = L.map(el, {
+        zoomControl: false,
+        dragging: false,
+        scrollWheelZoom: false,
+        doubleClickZoom: false,
+        boxZoom: false,
+        attributionControl: false,
+        touchZoom: false,
+        keyboard: false,
+      });
+
+      const layer = L.geoJSON(geojson, {
+        style: (feat: any) => {
+          const sigla = CODAREA_TO_UF[feat?.properties?.codarea ?? ''] ?? '';
+          const destaque = estadosDestacados.includes(sigla);
+          return {
+            color: COR_BORDA,
+            weight: 0.8,
+            fillColor: destaque ? COR_DESTAQUE : COR_NEUTRO,
+            fillOpacity: 1,
+          };
+        },
+      }).addTo(map);
+
+      map.fitBounds(layer.getBounds(), { padding: [8, 8] });
+    } catch (err) {
+      console.error('Mapa de área de atuação indisponível:', err);
+      showMapFallback(el);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMapaBrasil);
+  } else {
+    initMapaBrasil();
+  }
+</script>

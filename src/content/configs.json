@@ -1,0 +1,30 @@
+{
+  "nome_empresa": "Boulevard Arq & Con",
+  "tagline": "Do projeto às chaves, com excelência em cada etapa.",
+  "contato_email": "contato@boulevard-arqcon.com.br",
+  "contato_tel": "+55 (16) 99733-1615",
+  "contato_whatsapp": "+5516997331615",
+  "contato_local": "Ribeirão Preto, SP",
+  "social": {
+    "instagram": "https://www.instagram.com/boulevard.construtora/",
+    "linkedin": "#"
+  },
+  "nav_links": [
+    {
+      "label": "Portfólio",
+      "href": "/portfolio"
+    },
+    {
+      "label": "Serviços",
+      "href": "/servicos"
+    },
+    {
+      "label": "Sobre",
+      "href": "/sobre"
+    },
+    {
+      "label": "Contato",
+      "href": "/#contato"
+    }
+  ]
+}

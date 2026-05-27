@@ -1,0 +1,99 @@
+---
+import configs from '../content/configs.json';
+import textos from '../content/textos.json';
+
+const whatsappUrl = `https://wa.me/${configs.contato_whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(textos.whatsapp_mensagem)}`;
+---
+
+<a
+  href={whatsappUrl}
+  class="waf-btn"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Falar pelo WhatsApp"
+>
+  <svg
+    class="waf-icon"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <path d="M12.031 2C6.49 2 2 6.49 2 12.032c0 1.868.49 3.615 1.346 5.13L2 22l5.003-1.313A10.01 10.01 0 0 0 12.031 22C17.572 22 22 17.51 22 11.968 22 6.427 17.572 2 12.031 2ZM17.67 16.101c-.234.656-1.172 1.196-1.906 1.352-.508.105-1.172.188-3.406-.73-2.86-1.18-4.703-4.07-4.844-4.258-.136-.188-1.14-1.516-1.14-2.89 0-1.371.718-2.046 1.015-2.343.234-.234.621-.34.993-.34.12 0 .23.006.328.012.296.012.445.028.64.497.235.584.805 1.953.875 2.094.071.14.14.328.04.52-.094.2-.176.287-.316.445-.14.156-.274.277-.414.449-.128.152-.274.316-.113.613.163.296.72 1.183 1.546 1.914 1.063.945 1.93 1.242 2.25 1.374.234.095.516.071.687-.117.216-.234.48-.625.75-.992.187-.258.421-.293.667-.199.25.09 1.593.75 1.868.89.273.14.457.208.523.324.066.117.066.68-.168 1.336Z"/>
+  </svg>
+  <span class="waf-pulse" aria-hidden="true"></span>
+</a>
+
+<style>
+  .waf-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 90;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: #25D366;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 24px rgba(37, 211, 102, 0.35);
+    transition:
+      transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+      box-shadow 0.25s ease;
+    text-decoration: none;
+  }
+
+  .waf-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 10px 32px rgba(37, 211, 102, 0.45);
+  }
+
+  .waf-btn:active {
+    transform: scale(0.96);
+  }
+
+  .waf-icon {
+    width: 28px;
+    height: 28px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .waf-pulse {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid rgba(37, 211, 102, 0.6);
+    animation: waf-ring 2.4s cubic-bezier(0.4, 0, 0.6, 1) 1.5s infinite;
+    pointer-events: none;
+  }
+
+  @keyframes waf-ring {
+    0% { transform: scale(1); opacity: 0.6; }
+    70% { transform: scale(1.45); opacity: 0; }
+    100% { transform: scale(1.45); opacity: 0; }
+  }
+
+  @media (max-width: 768px) {
+    .waf-btn {
+      width: 52px;
+      height: 52px;
+      bottom: 16px;
+      right: 16px;
+    }
+    .waf-icon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  @media print {
+    .waf-btn { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .waf-pulse { animation: none; }
+  }
+</style>

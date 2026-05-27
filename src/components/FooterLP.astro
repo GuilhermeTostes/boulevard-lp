@@ -1,0 +1,147 @@
+---
+import configs from '../content/configs.json';
+
+const anoAtual = new Date().getFullYear();
+const telDisplay = configs.contato_tel.replace(/^\+55\s*/, '');
+---
+
+<footer class="site-footer">
+  <div class="section-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img
+          src="/assets/logo-horizontal-light.png"
+          alt="Boulevard Arq & Con"
+          class="footer-logo"
+          height="44"
+        />
+        <p class="footer-tagline">{configs.tagline}</p>
+      </div>
+      <div class="footer-col">
+        <p class="col-title">Contato</p>
+        <div class="col-links">
+          <span class="col-link-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+            </svg>
+            {telDisplay}
+          </span>
+          <span class="col-link-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12.031 2C6.49 2 2 6.49 2 12.032c0 1.868.49 3.615 1.346 5.13L2 22l5.003-1.313A10.01 10.01 0 0 0 12.031 22C17.572 22 22 17.51 22 11.968 22 6.427 17.572 2 12.031 2ZM17.67 16.101c-.234.656-1.172 1.196-1.906 1.352-.508.105-1.172.188-3.406-.73-2.86-1.18-4.703-4.07-4.844-4.258-.136-.188-1.14-1.516-1.14-2.89 0-1.371.718-2.046 1.015-2.343.234-.234.621-.34.993-.34.12 0 .23.006.328.012.296.012.445.028.64.497.235.584.805 1.953.875 2.094.071.14.14.328.04.52-.094.2-.176.287-.316.445-.14.156-.274.277-.414.449-.128.152-.274.316-.113.613.163.296.72 1.183 1.546 1.914 1.063.945 1.93 1.242 2.25 1.374.234.095.516.071.687-.117.216-.234.48-.625.75-.992.187-.258.421-.293.667-.199.25.09 1.593.75 1.868.89.273.14.457.208.523.324.066.117.066.68-.168 1.336Z"/>
+            </svg>
+            {telDisplay}
+          </span>
+          <span class="col-link-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+            {configs.contato_email}
+          </span>
+          <span class="col-link-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+            </svg>
+            {configs.contato_local}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="copy">© {anoAtual} Boulevard Arq &amp; Con. Todos os direitos reservados.</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--verde-dk);
+    padding: 4rem 0 1.75rem;
+    border-top: 1px solid rgba(240, 239, 245, 0.07);
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 4rem;
+    padding-bottom: 2.75rem;
+    border-bottom: 1px solid rgba(240, 239, 245, 0.08);
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-logo {
+    display: block;
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+    margin-bottom: 1rem;
+  }
+
+  .footer-tagline {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(240, 239, 245, 0.6);
+    line-height: 1.7;
+    max-width: 220px;
+  }
+
+  .col-title {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dourado);
+    margin-bottom: 1.125rem;
+  }
+
+  .col-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .col-link-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .col-link-item svg {
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+
+  .col-links a,
+  .col-links span {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(240, 239, 245, 0.7);
+    transition: color 0.2s var(--ease-premium);
+  }
+
+  .col-links a:hover {
+    color: var(--offwhite);
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .copy {
+    font-size: 11px;
+    color: rgba(240, 239, 245, 0.28);
+    letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 768px) {
+    .site-footer {
+      padding: 3.5rem 0 1.5rem;
+    }
+    .footer-top {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+</style>

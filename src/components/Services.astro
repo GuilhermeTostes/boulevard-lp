@@ -1,0 +1,113 @@
+---
+import textos from '../content/textos.json';
+const sv = textos.servicos;
+---
+
+<section id="servicos" class="services">
+  <div class="section-inner">
+    <div class="services-header">
+      <p class="label">{sv.eyebrow}</p>
+      <div class="gold-line"></div>
+      <h2 class="services-title">{sv.titulo}</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <p class="service-num">{sv.card1_numero}</p>
+        <h3 class="service-card-title">{sv.card1_titulo}</h3>
+        <p class="service-body">{sv.card1_body}</p>
+        <a href="/servicos" class="btn-text">
+          {sv.card1_link_texto} <span aria-hidden="true">→</span>
+        </a>
+      </div>
+      <div class="service-card">
+        <p class="service-num">{sv.card2_numero}</p>
+        <h3 class="service-card-title">{sv.card2_titulo}</h3>
+        <p class="service-body">{sv.card2_body}</p>
+        <a href="/servicos" class="btn-text">
+          {sv.card2_link_texto} <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    background: var(--branco);
+    padding: 0 0 7rem;
+  }
+
+  .services-header {
+    margin-bottom: 3rem;
+  }
+
+  .services-title {
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 600;
+    color: var(--verde);
+    letter-spacing: -0.01em;
+    margin-top: 1.25rem;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .service-card {
+    background: var(--verde);
+    border-radius: 12px;
+    padding: 3.25rem 3rem;
+    display: flex;
+    flex-direction: column;
+    transition:
+      transform 0.4s var(--ease-premium),
+      box-shadow 0.4s var(--ease-premium);
+  }
+
+  .service-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 44px rgba(0, 0, 0, 0.18);
+  }
+
+  .service-num {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(2.5rem, 4vw, 3.25rem);
+    color: var(--dourado);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--branco);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .service-body {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--muted-dk);
+    flex: 1;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .services {
+      padding: 0 0 5rem;
+    }
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+    .service-card {
+      padding: 2.5rem 1.75rem;
+    }
+  }
+</style>

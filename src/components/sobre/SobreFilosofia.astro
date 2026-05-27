@@ -1,0 +1,71 @@
+---
+import sobre from '../../content/sobre.json';
+
+const paragrafos = sobre.body.split('\n\n').filter(Boolean);
+---
+
+<section class="filosofia">
+  <div class="section-inner">
+    <div class="filosofia-inner">
+      <div class="filosofia-label-col">
+        <p class="label">{sobre.eyebrow}</p>
+        <div class="gold-line"></div>
+      </div>
+      <div class="filosofia-body">
+        {paragrafos.map((p) => <p class="filosofia-para">{p}</p>)}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .filosofia {
+    background: var(--offwhite);
+    padding: 6rem 0 5rem;
+  }
+
+  .filosofia-inner {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem 4rem;
+    align-items: start;
+  }
+
+  .filosofia-label-col {
+    padding-top: 0.25rem;
+  }
+
+  .filosofia-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .filosofia-para {
+    font-size: clamp(15px, 1.1vw, 17px);
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--verde);
+    max-width: 72ch;
+  }
+
+  .filosofia-para:first-child {
+    font-size: clamp(16px, 1.3vw, 19px);
+    font-weight: 400;
+    color: var(--verde);
+    opacity: 0.9;
+  }
+
+  @media (max-width: 768px) {
+    .filosofia {
+      padding: 4.5rem 0 4rem;
+    }
+    .filosofia-inner {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .filosofia-label-col {
+      margin-bottom: 1.5rem;
+    }
+  }
+</style>

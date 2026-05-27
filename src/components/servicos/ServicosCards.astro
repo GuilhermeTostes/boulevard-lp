@@ -1,0 +1,171 @@
+---
+import servicos from '../../content/servicos.json';
+const { projetos, obras } = servicos;
+
+const cards = [
+  {
+    eyebrow: projetos.eyebrow,
+    titulo: projetos.titulo,
+    descricao: projetos.descricao,
+    inclui_titulo: projetos.inclui_titulo,
+    inclui: projetos.inclui,
+    aplicavel_titulo: projetos.aplicavel_titulo,
+    aplicavel: projetos.aplicavel,
+  },
+  {
+    eyebrow: obras.eyebrow,
+    titulo: obras.titulo,
+    descricao: obras.descricao,
+    inclui_titulo: obras.inclui_titulo,
+    inclui: obras.inclui,
+    aplicavel_titulo: obras.aplicavel_titulo,
+    aplicavel: obras.aplicavel,
+  },
+];
+---
+
+<section class="srv-cards">
+  <div class="section-inner">
+    <div class="srv-cards-grid">
+      {cards.map((card) => (
+        <article class="srv-card">
+          <p class="srv-card-num">{card.eyebrow}</p>
+          <h2 class="srv-card-title">{card.titulo}</h2>
+          <p class="srv-card-desc">{card.descricao}</p>
+          <div class="srv-card-lists">
+            <div class="srv-card-list">
+              <p class="srv-list-heading">{card.inclui_titulo}</p>
+              <ul>
+                {card.inclui.map((item) => <li>{item}</li>)}
+              </ul>
+            </div>
+            <div class="srv-card-list">
+              <p class="srv-list-heading">{card.aplicavel_titulo}</p>
+              <ul>
+                {card.aplicavel.map((item) => <li>{item}</li>)}
+              </ul>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .srv-cards {
+    background: var(--offwhite);
+    padding: 6rem 0 7rem;
+  }
+
+  .srv-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+
+  .srv-card {
+    background: var(--branco);
+    border: 1px solid var(--border-g);
+    border-radius: 12px;
+    padding: clamp(2rem, 3vw, 2.75rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    transition:
+      box-shadow 0.4s var(--ease-premium),
+      transform 0.4s var(--ease-premium);
+  }
+
+  .srv-card:hover {
+    box-shadow: 0 14px 44px rgba(33, 62, 64, 0.1);
+    transform: translateY(-3px);
+  }
+
+  .srv-card-num {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(2.5rem, 4vw, 3.75rem);
+    color: var(--dourado);
+    line-height: 1;
+  }
+
+  .srv-card-title {
+    font-size: clamp(1.5rem, 2vw, 1.875rem);
+    font-weight: 600;
+    color: var(--verde);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .srv-card-desc {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--muted);
+    flex: 1;
+  }
+
+  .srv-card-lists {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 2rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(202, 155, 88, 0.18);
+  }
+
+  .srv-list-heading {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dourado);
+    margin-bottom: 0.875rem;
+  }
+
+  .srv-card-list ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .srv-card-list li {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--muted);
+    padding-left: 1.125rem;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .srv-card-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--dourado);
+    opacity: 0.6;
+  }
+
+  @media (max-width: 860px) {
+    .srv-cards {
+      padding: 4.5rem 0 5.5rem;
+    }
+    .srv-cards-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .srv-card-lists {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+  }
+</style>

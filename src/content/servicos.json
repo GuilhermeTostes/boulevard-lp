@@ -1,0 +1,163 @@
+{
+  "hero": {
+    "eyebrow": "Serviços",
+    "titulo": "Duas frentes, o mesmo compromisso com o resultado.",
+    "lead": "Em projetos ou obras, a Boulevard trabalha com critério, planejamento e atenção aos detalhes para transformar intenções em espaços bem pensados e bem executados."
+  },
+  "projetos": {
+    "eyebrow": "01",
+    "titulo": "Projetos",
+    "descricao": "Desenvolvemos projetos a partir de uma leitura cuidadosa do cliente, do espaço, do uso e do orçamento disponível. Cada solução considera estética, funcionalidade, iluminação natural, ventilação, conforto térmico e acústico, sempre com atenção à viabilidade para que o projeto possa sair do papel sem quebrar expectativas na etapa da obra.",
+    "inclui_titulo": "Inclui",
+    "inclui": [
+      "Projeto Arquitetônico",
+      "Projeto de Interiores",
+      "Projetos Complementares",
+      "Projeto de Reforma",
+      "Estudo de layout e viabilidade",
+      "Compatibilização técnica"
+    ],
+    "aplicavel_titulo": "Aplicável a",
+    "aplicavel": [
+      "Residencial",
+      "Comercial / Corporativo",
+      "Industrial",
+      "Edifícios / Condomínios"
+    ]
+  },
+  "obras": {
+    "eyebrow": "02",
+    "titulo": "Obras",
+    "descricao": "Executamos obras com olhar técnico, cuidado nos detalhes e compromisso com a experiência do cliente. Do planejamento à entrega, acompanhamos cada decisão para preservar a qualidade da execução, o controle do investimento e a fidelidade ao resultado previsto.",
+    "inclui_titulo": "Inclui",
+    "inclui": [
+      "Planejamento da execução",
+      "Organização e controle de etapas",
+      "Gestão de fornecedores",
+      "Coordenação de equipes",
+      "Controle de cronograma",
+      "Orçamento paramétrico",
+      "Acompanhamento técnico contínuo"
+    ],
+    "aplicavel_titulo": "Aplicável a",
+    "aplicavel": [
+      "Residencial",
+      "Comercial / Corporativo",
+      "Industrial",
+      "Edifícios / Condomínios"
+    ]
+  },
+  "fluxo": {
+    "eyebrow": "Como trabalhamos",
+    "titulo": "Do briefing à entrega final",
+    "subtitulo": "Um fluxo único, contínuo e sem rupturas.\nDa primeira conversa até a entrega das chaves.",
+    "etapas": [
+      {
+        "titulo": "Briefing",
+        "descricao": "Entendemos o que você quer construir, como vive e o que considera essencial.",
+        "destaque": "inicio"
+      },
+      {
+        "titulo": "Projeto Inicial",
+        "descricao": "Estudo preliminar e proposta arquitetônica com o partido geral do projeto.",
+        "destaque": ""
+      },
+      {
+        "titulo": "Revisões de Projeto",
+        "descricao": "Iterações conjuntas até a versão que captura sua visão com precisão.",
+        "destaque": ""
+      },
+      {
+        "titulo": "Detalhamentos Técnicos",
+        "descricao": "Projeto executivo, complementares e especificação fina de materiais.",
+        "destaque": ""
+      },
+      {
+        "titulo": "Aprovação de Projetos",
+        "descricao": "Encaminhamento e acompanhamento junto aos órgãos competentes até a liberação.",
+        "destaque": ""
+      },
+      {
+        "titulo": "Entrega Final do Projeto / Início da Obra",
+        "descricao": "Marco simultâneo: o projeto fecha e a obra começa. Projeto entregue e aprovado, pronto para iniciar as etapas de desenvolvimento da obra.",
+        "destaque": "virada"
+      },
+      {
+        "titulo": "Orçamento Paramétrico",
+        "descricao": "Custo detalhado por etapa, transparência integral em cada item.",
+        "destaque": ""
+      },
+      {
+        "titulo": "Cronograma",
+        "descricao": "Sequenciamento das frentes, marcos críticos e prazos de entrega definidos.",
+        "destaque": ""
+      },
+      {
+        "titulo": "Planejamentos Preliminares",
+        "descricao": "Logística de canteiro, mobilização e organização para iniciar com fluência.",
+        "destaque": ""
+      },
+      {
+        "titulo": "Execução da Obra",
+        "descricao": "Coordenação das equipes e fornecedores para que a obra flua continuamente. Controle dos prazos, custos e padrões de entrega.",
+        "destaque": ""
+      },
+      {
+        "titulo": "Acompanhamento Contínuo",
+        "descricao": "Visitas, relatórios e comunicação clara ao longo de todo o ciclo da obra.",
+        "destaque": ""
+      },
+      {
+        "titulo": "Entrega Final da Obra",
+        "descricao": "Vistoria, ajustes finais e entrega das chaves.\nProjeto e obra concluídos pela mesma equipe.",
+        "destaque": "fim"
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "Dúvidas frequentes",
+    "titulo": "Perguntas e respostas",
+    "itens": [
+      {
+        "pergunta": "Como funciona o primeiro atendimento?",
+        "resposta": "O primeiro atendimento é uma conversa para entendermos seu momento, suas ideias, necessidades e expectativas. Também apresentamos a Boulevard, nossa forma de trabalho e os caminhos possíveis para iniciar o projeto, a obra ou reforma com mais clareza."
+      },
+      {
+        "pergunta": "Quanto tempo leva um projeto arquitetônico?",
+        "resposta": "O prazo varia conforme a complexidade e o programa do projeto. Em média, um projeto residencial completo, do estudo preliminar ao executivo, leva entre 3 e 4 meses. Projetos maiores ou com maior nível de detalhamento podem demandar mais tempo. Em todos os casos, definimos um cronograma claro logo no início."
+      },
+      {
+        "pergunta": "Vocês fazem orçamento antes do projeto?",
+        "resposta": "Sim, é possível fazer uma estimativa inicial para orientar a tomada de decisão. No entanto, o orçamento mais preciso depende do desenvolvimento do projeto, definição de materiais, acabamentos, soluções técnicas e escopo completo da obra. Por isso, tratamos essa etapa com cuidado para evitar números superficiais ou expectativas irreais."
+      },
+      {
+        "pergunta": "O projeto considera o orçamento disponível para a obra?",
+        "resposta": "Sim. Um dos nossos principais cuidados é desenvolver projetos compatíveis com o orçamento e as expectativas do cliente. Estética, conforto, funcionalidade e viabilidade de execução são pensados juntos, reduzindo surpresas e frustrações na etapa da obra."
+      },
+      {
+        "pergunta": "Vocês fazem só o projeto sem a obra?",
+        "resposta": "Sim. É possível contratar apenas o projeto. A Boulevard desenvolve projetos arquitetônicos, interiores, reformas e demais soluções técnicas, mesmo quando a execução será feita posteriormente ou por outra equipe.\nPorém, quando projeto e obra são conduzidos pela mesma equipe, o resultado é mais coeso: o que foi concebido é executado com precisão, sem ruídos de interpretação entre equipes diferentes."
+      },
+      {
+        "pergunta": "Já tenho um projeto pronto. Posso contratar apenas a obra?",
+        "resposta": "Sim. Também executamos obras a partir de projetos já existentes. Antes de iniciar, fazemos uma análise técnica dos projetos disponíveis para atender o escopo, identificar possíveis ajustes e organizar a execução com mais segurança."
+      },
+      {
+        "pergunta": "Atendem reforma ou só construção nova?",
+        "resposta": "Atendemos os dois. Reformas integram nosso escopo de projetos e obras, seja em apartamentos, casas ou espaços comerciais. O processo é o mesmo: briefing, projeto, aprovação e execução."
+      },
+      {
+        "pergunta": "O que está incluso na gestão de obra?",
+        "resposta": "Nossa gestão inclui planejamento completo, cronograma detalhado por etapa, orçamento paramétrico, controle das frentes de serviço, coordenação de fornecedores e acompanhamento contínuo no canteiro. O cliente tem visibilidade integral de cada fase, sem surpresas."
+      },
+      {
+        "pergunta": "Como funciona o acompanhamento durante a obra?",
+        "resposta": "O acompanhamento é contínuo e presencial. Nossa equipe técnica realiza visitas regulares ao canteiro, com relatórios periódicos de andamento. O cliente é atualizado em cada etapa relevante e tem canal direto de comunicação ao longo de todo o processo."
+      },
+      {
+        "pergunta": "Vocês atendem fora de Ribeirão Preto?",
+        "resposta": "Sim. Atendemos projetos e obras em outras regiões mediante análise de logística. Nossa base é Ribeirão Preto, mas projetos com demanda justificada podem ser atendidos em outras localidades. Entre em contato para avaliarmos sua necessidade."
+      }
+    ]
+  }
+}

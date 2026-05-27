@@ -1,0 +1,252 @@
+---
+import sobre from '../content/sobre.json';
+
+const paragrafos = sobre.body.split(/\n\n+/);
+---
+
+<section id="sobre" class="about">
+  <div class="about-watermark" aria-hidden="true">
+    <img src="/assets/symbol-gold.png" alt="" width="360" height="360" />
+  </div>
+
+  <div class="section-inner">
+    <p class="label">{sobre.eyebrow}</p>
+    <div class="gold-line"></div>
+
+    <div class="about-grid">
+      <div class="about-text">
+        <h2 class="preserve-lines">{sobre.titulo}</h2>
+        {paragrafos.map((p) => (
+          <p class="about-body">{p}</p>
+        ))}
+        <a href="/sobre" class="btn btn-outline-dark about-cta">
+          Conheça a Boulevard
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <div class="about-partners">
+        {sobre.socios.map((s, i) => (
+          <article class="partner-card" style={`--i:${i}`}>
+            <div class="partner-photo" aria-hidden={s.foto ? undefined : 'true'}>
+              {s.foto ? (
+                <img src={s.foto} alt={s.nome} loading="lazy" />
+              ) : (
+                <span class="partner-initial">{s.nome.trim().charAt(0).toUpperCase()}</span>
+              )}
+            </div>
+            <div class="partner-info">
+              <p class="partner-role">{s.cargo}</p>
+              <p class="partner-name">{s.nome}</p>
+              {s.bio && <p class="partner-bio">{s.bio}</p>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    background: var(--branco);
+    padding: 7rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-watermark {
+    position: absolute;
+    left: -80px;
+    top: -60px;
+    opacity: 0.035;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 5fr 6fr;
+    gap: 4.5rem;
+    margin-top: 3rem;
+    align-items: start;
+  }
+
+  .about-text h2 {
+    margin-bottom: 1.75rem;
+    max-width: 16ch;
+  }
+
+  .about-body {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--muted);
+    margin-bottom: 1.25rem;
+    max-width: 52ch;
+  }
+
+  .about-body:last-of-type {
+    margin-bottom: 1.75rem;
+  }
+
+  .about-cta {
+    margin-top: 0.25rem;
+  }
+
+  /* ── Partners ──────────────────────────────────────────── */
+  .about-partners {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .partner-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--branco);
+    border: 1px solid rgba(33, 62, 64, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.7s var(--ease-premium) calc(var(--i, 0) * 90ms + 0.1s),
+      transform 0.7s var(--ease-premium) calc(var(--i, 0) * 90ms + 0.1s),
+      box-shadow 0.4s var(--ease-premium),
+      translate 0.4s var(--ease-premium);
+  }
+
+  .partner-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .partner-card:hover {
+    box-shadow: 0 14px 44px rgba(33, 62, 64, 0.1);
+    translate: 0 -3px;
+  }
+
+  .partner-photo {
+    aspect-ratio: 4 / 5;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(202, 155, 88, 0.08), transparent 60%),
+      linear-gradient(135deg, var(--offwhite) 0%, rgba(33, 62, 64, 0.05) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .partner-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .partner-photo::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--dourado);
+    opacity: 0.35;
+  }
+
+  .partner-initial {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(4.5rem, 7vw, 6.5rem);
+    color: var(--dourado);
+    opacity: 0.55;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .partner-info {
+    padding: 1.5rem 1.5rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .partner-role {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dourado);
+  }
+
+  .partner-name {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.1;
+    color: var(--verde);
+    letter-spacing: 0.005em;
+  }
+
+  .partner-bio {
+    margin-top: 0.85rem;
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  /* ── Responsivo ───────────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    .about-text h2 {
+      max-width: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .about {
+      padding: 5rem 0;
+    }
+    .about-partners {
+      grid-template-columns: 1fr;
+    }
+    .about-watermark {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .partner-card {
+      opacity: 1;
+      transform: none;
+      transition: box-shadow 0.3s ease, translate 0.3s ease;
+    }
+  }
+</style>
+
+<script>
+  const cards = document.querySelectorAll<HTMLElement>('.partner-card');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        (entry.target as HTMLElement).classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.25 }
+  );
+
+  cards.forEach((card) => observer.observe(card));
+</script>

@@ -1,0 +1,262 @@
+---
+import configs from '../content/configs.json';
+---
+
+<!-- D5: Floating Island Pill nav -->
+<header id="header" class="site-header">
+  <a href="/" class="header-logo" aria-label="Boulevard Arq & Con — página inicial">
+    <img src="/assets/logo-horizontal-light.png" alt="Boulevard Arq & Con" height="44" />
+  </a>
+
+  <nav class="header-nav" aria-label="Menu principal">
+    {configs.nav_links.map((link) => (
+      <a href={link.href}>{link.label}</a>
+    ))}
+  </nav>
+
+  <a href="/#contato" class="btn btn-primary header-cta">Solicitar Projeto</a>
+
+  <button class="hamburger" id="hamburger" aria-expanded="false" aria-label="Abrir menu">
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<!-- Overlay mobile -->
+<div class="mobile-overlay" id="mobileOverlay" aria-hidden="true">
+  <nav class="overlay-nav" aria-label="Menu mobile">
+    {configs.nav_links.map((link) => (
+      <a href={link.href} class="overlay-link">{link.label}</a>
+    ))}
+  </nav>
+  <a href="/#contato" class="btn btn-primary overlay-cta">Solicitar Projeto</a>
+</div>
+
+<style>
+  .site-header {
+    position: fixed;
+    top: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    width: max-content;
+    max-width: calc(100vw - 3rem);
+    padding: 0.5rem 1rem 0.5rem 1.25rem;
+    border-radius: 9999px;
+
+    background: rgba(33, 62, 64, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 4px 24px rgba(0, 0, 0, 0.22);
+
+    transition:
+      background 0.4s var(--ease-premium),
+      box-shadow 0.4s var(--ease-premium);
+  }
+
+  .site-header.scrolled {
+    background: rgba(24, 46, 48, 0.96);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 8px 32px rgba(0, 0, 0, 0.32);
+  }
+
+  .header-logo img {
+    display: block;
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .header-nav {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+  }
+
+  .header-nav a {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: rgba(240, 239, 245, 0.72);
+    white-space: nowrap;
+    transition: color 0.2s var(--ease-premium);
+  }
+  .header-nav a:hover {
+    color: var(--offwhite);
+  }
+
+  .header-cta {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.55rem 1.25rem;
+    white-space: nowrap;
+  }
+
+  /* ── Hamburger (oculto em desktop) ─────────────────────── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--offwhite);
+    border-radius: 2px;
+    transform-origin: center;
+    transition:
+      transform 0.35s var(--ease-premium),
+      opacity 0.25s var(--ease-premium);
+  }
+
+  /* X quando aberto */
+  .site-header.menu-open .hamburger span:first-child {
+    transform: translateY(3.25px) rotate(45deg);
+  }
+  .site-header.menu-open .hamburger span:last-child {
+    transform: translateY(-3.25px) rotate(-45deg);
+  }
+
+  /* ── Overlay mobile ────────────────────────────────────── */
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 199;
+    background: var(--verde-dk);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transform: translateY(-100%);
+    transition: transform 0.45s var(--ease-premium);
+  }
+
+  .mobile-overlay.is-open {
+    transform: translateY(0);
+  }
+
+  .overlay-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .overlay-link {
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: rgba(240, 239, 245, 0.72);
+    padding: 0.625rem 1rem;
+    transition: color 0.2s var(--ease-premium);
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      color 0.2s var(--ease-premium),
+      opacity 0.35s var(--ease-premium),
+      transform 0.35s var(--ease-premium);
+  }
+
+  .mobile-overlay.is-open .overlay-link {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mobile-overlay.is-open .overlay-link:nth-child(1) { transition-delay: 0.05s; }
+  .mobile-overlay.is-open .overlay-link:nth-child(2) { transition-delay: 0.10s; }
+  .mobile-overlay.is-open .overlay-link:nth-child(3) { transition-delay: 0.15s; }
+  .mobile-overlay.is-open .overlay-link:nth-child(4) { transition-delay: 0.20s; }
+
+  .overlay-link:hover {
+    color: var(--offwhite);
+  }
+
+  .overlay-cta {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.35s var(--ease-premium) 0.25s,
+      transform 0.35s var(--ease-premium) 0.25s;
+  }
+
+  .mobile-overlay.is-open .overlay-cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── Mobile breakpoint ─────────────────────────────────── */
+  @media (max-width: 768px) {
+    .header-nav,
+    .header-cta {
+      display: none;
+    }
+    .hamburger {
+      display: flex;
+    }
+    .mobile-overlay {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  const header = document.getElementById('header');
+  const hamburger = document.getElementById('hamburger');
+  const overlay = document.getElementById('mobileOverlay');
+
+  if (header) {
+    const onScroll = () => {
+      header.classList.toggle('scrolled', window.scrollY > 80);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  if (hamburger && overlay && header) {
+    const openMenu = () => {
+      header.classList.add('menu-open');
+      overlay.classList.add('is-open');
+      overlay.setAttribute('aria-hidden', 'false');
+      hamburger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeMenu = () => {
+      header.classList.remove('menu-open');
+      overlay.classList.remove('is-open');
+      overlay.setAttribute('aria-hidden', 'true');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    };
+
+    hamburger.addEventListener('click', () => {
+      header.classList.contains('menu-open') ? closeMenu() : openMenu();
+    });
+
+    overlay.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', closeMenu);
+    });
+  }
+</script>

@@ -1,0 +1,57 @@
+{
+  "hero": {
+    "eyebrow": "Arquitetura & Construção",
+    "titulo": "Arquitetura para \nconstruir melhor!",
+    "subtitulo": "Grandes resultados não nascem do improviso.",
+    "cta_primario": "Fale com a Boulevard",
+    "cta_secundario": "Ver Portfólio",
+    "imagem": "/projetos/novo 4k_Nero_AI_Image_Upscaler_Photo.png"
+  },
+  "value_prop": {
+    "eyebrow": "Por que Boulevard",
+    "card1_numero": "01",
+    "card1_titulo": "Projetos com intenção,\ntécnica e identidade.",
+    "card1_body": "Cada projeto nasce de uma leitura cuidadosa do cliente, do espaço e das possibilidades reais de execução. O resultado são soluções autorais, funcionais e coerentes em cada detalhe.",
+    "card2_numero": "02",
+    "card2_titulo": "Obras com controle,\ncritério e presença.",
+    "card2_body": "Acompanhamos a execução com organização, olhar técnico e cuidado constante com as decisões do canteiro. Porque qualidade de obra se constrói etapa por etapa."
+  },
+  "servicos": {
+    "eyebrow": "O que fazemos",
+    "titulo": "Nossos Serviços",
+    "card1_numero": "I",
+    "card1_titulo": "Projetos",
+    "card1_body": "É aqui que uma intenção começa a ganhar forma. Traduzimos ideias, necessidades e estilo de vida em projetos residenciais, comerciais e corporativos pensados para existir com beleza, função e identidade.",
+    "card1_link_texto": "Saiba mais",
+    "card2_numero": "II",
+    "card2_titulo": "Obras",
+    "card2_body": "Cada obra representa um investimento, uma expectativa e uma nova forma de ocupar o espaço. Executamos obras residenciais, comerciais, corporativas e reformas, cuidando da execução para que cada etapa avance com segurança, respeito ao projeto e atenção ao resultado final.",
+    "card2_link_texto": "Saiba mais"
+  },
+  "portfolio": {
+    "eyebrow": "Portfólio",
+    "titulo": "Projetos entregues",
+    "ver_todos": "Ver todos os projetos"
+  },
+  "video_banner": {
+    "visivel": false,
+    "eyebrow": "Conheça a Boulevard",
+    "titulo": "A Boulevard em movimento",
+    "subtitulo": "Um olhar sobre o nosso modo de trabalhar — do ateliê ao canteiro.",
+    "imagem_capa": "https://picsum.photos/seed/boulevard-video/1920/1080",
+    "video_url": "https://www.youtube.com/watch?v=ScMzIvxBSi4"
+  },
+  "depoimentos": {
+    "eyebrow": "Depoimentos",
+    "titulo": "O que dizem\nnossos clientes"
+  },
+  "whatsapp_mensagem": "Olá Boulevard! Vim pelo site e gostaria de conversar sobre um projeto/obra.",
+  "cta": {
+    "eyebrow": "Contato",
+    "titulo": "Pronto para começar?",
+    "subtitulo": "Antes de qualquer proposta, queremos conhecer você, entender o que deseja construir e apresentar melhor como a Boulevard pode conduzir esse processo.",
+    "cta_primario": "Enviar mensagem",
+    "cta_form_divider": "ou envie uma mensagem",
+    "cta_whatsapp": "Falar pelo WhatsApp"
+  }
+}

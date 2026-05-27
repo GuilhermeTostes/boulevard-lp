@@ -1,0 +1,332 @@
+---
+import configs from '../content/configs.json';
+import textos from '../content/textos.json';
+const cta = textos.cta;
+const whatsappUrl = `https://wa.me/${configs.contato_whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(textos.whatsapp_mensagem)}`;
+---
+
+<section id="contato" class="cta-final">
+  <div class="cta-rings" aria-hidden="true">
+    <div class="ring" style="width:500px;height:500px;"></div>
+    <div class="ring" style="width:340px;height:340px;"></div>
+    <div class="ring" style="width:180px;height:180px;"></div>
+  </div>
+  <div class="section-inner">
+    <div class="cta-inner">
+      <img
+        src="/assets/logo-vertical-light.png"
+        alt="Boulevard Arq & Con"
+        class="cta-logo"
+        width="1319"
+        height="741"
+      />
+      <p class="label" style="margin-bottom: 1rem">{cta.eyebrow}</p>
+      <h2 class="preserve-lines">{cta.titulo}</h2>
+      <p class="cta-sub preserve-lines">{cta.subtitulo}</p>
+
+      <a href={whatsappUrl} class="btn btn-primary cta-whats-btn" target="_blank" rel="noopener noreferrer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12.031 2C6.49 2 2 6.49 2 12.032c0 1.868.49 3.615 1.346 5.13L2 22l5.003-1.313A10.01 10.01 0 0 0 12.031 22C17.572 22 22 17.51 22 11.968 22 6.427 17.572 2 12.031 2ZM17.67 16.101c-.234.656-1.172 1.196-1.906 1.352-.508.105-1.172.188-3.406-.73-2.86-1.18-4.703-4.07-4.844-4.258-.136-.188-1.14-1.516-1.14-2.89 0-1.371.718-2.046 1.015-2.343.234-.234.621-.34.993-.34.12 0 .23.006.328.012.296.012.445.028.64.497.235.584.805 1.953.875 2.094.071.14.14.328.04.52-.094.2-.176.287-.316.445-.14.156-.274.277-.414.449-.128.152-.274.316-.113.613.163.296.72 1.183 1.546 1.914 1.063.945 1.93 1.242 2.25 1.374.234.095.516.071.687-.117.216-.234.48-.625.75-.992.187-.258.421-.293.667-.199.25.09 1.593.75 1.868.89.273.14.457.208.523.324.066.117.066.68-.168 1.336Z"/>
+        </svg>
+        {cta.cta_whatsapp}
+      </a>
+
+      <div class="cta-divider" role="separator" aria-label={cta.cta_form_divider}>
+        <span>{cta.cta_form_divider}</span>
+      </div>
+
+      <form class="cta-form" id="ctaForm">
+        <input type="hidden" name="access_key" value="454d1f88-df26-4dc0-b7b7-6e8496c40ad0" />
+        <input type="hidden" name="subject" value="Novo contato — site Boulevard" />
+        <input type="hidden" name="from_name" value="Site Boulevard" />
+        <input
+          type="checkbox"
+          name="botcheck"
+          class="hp"
+          style="display: none;"
+          tabindex="-1"
+          autocomplete="off"
+          aria-hidden="true"
+        />
+        <div class="form-row">
+          <input name="nome" type="text" required placeholder="Nome" autocomplete="name" />
+          <input name="telefone" type="tel" required placeholder="Telefone" autocomplete="tel" />
+        </div>
+        <select name="assunto" required>
+          <option value="" disabled selected>Assunto de interesse</option>
+          <option value="projeto">Projeto</option>
+          <option value="obra">Obra</option>
+        </select>
+        <textarea
+          name="mensagem"
+          rows="3"
+          placeholder="Nos conte um pouco sobre o que gostaria de realizar"
+        ></textarea>
+        <button type="submit" class="btn btn-outline-light form-submit">
+          {cta.cta_primario}
+        </button>
+        <p class="form-status" id="formStatus" hidden></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-final {
+    background: var(--verde);
+    padding: 7rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-rings {
+    position: absolute;
+    right: -80px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(202, 155, 88, 0.12);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .cta-inner {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .cta-logo {
+    height: 140px;
+    width: auto;
+    margin: 0 auto 2.5rem;
+    display: block;
+    object-fit: contain;
+  }
+
+  .cta-final h2 {
+    color: var(--offwhite);
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    letter-spacing: 0.02em;
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-sub {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(240, 239, 245, 0.6);
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── Form ──────────────────────────────────────────────── */
+  .cta-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+
+  .hp {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.875rem;
+  }
+
+  .cta-form input[type="text"],
+  .cta-form input[type="tel"],
+  .cta-form select,
+  .cta-form textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    color: var(--offwhite);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 300;
+    padding: 13px 16px;
+    outline: none;
+    transition: border-color 0.2s var(--ease-premium);
+  }
+
+  .cta-form input::placeholder,
+  .cta-form textarea::placeholder {
+    color: rgba(240, 239, 245, 0.35);
+  }
+
+  .cta-form select {
+    appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(240,239,245,0.4)' stroke-width='2' stroke-linecap='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+
+  .cta-form select option {
+    background: var(--verde);
+    color: var(--offwhite);
+  }
+
+  .cta-form textarea {
+    resize: none;
+    line-height: 1.65;
+  }
+
+  .cta-form input:focus,
+  .cta-form select:focus,
+  .cta-form textarea:focus {
+    border-color: var(--dourado);
+  }
+
+  .form-submit {
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.25rem;
+  }
+
+  .form-status {
+    font-size: 13px;
+    font-weight: 400;
+    text-align: center;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: -0.25rem;
+  }
+
+  .form-status[data-ok] {
+    background: rgba(37, 211, 102, 0.1);
+    color: #4ade80;
+    border: 1px solid rgba(37, 211, 102, 0.2);
+  }
+
+  .form-status[data-err] {
+    background: rgba(255, 100, 80, 0.1);
+    color: #f87171;
+    border: 1px solid rgba(255, 100, 80, 0.2);
+  }
+
+  /* ── WhatsApp primário + divider ───────────────────────── */
+  .cta-whats-btn {
+    width: 100%;
+    justify-content: center;
+    gap: 10px;
+    font-size: 15px;
+    padding: 16px 28px;
+    margin-bottom: 2rem;
+  }
+
+  .cta-whats-btn svg {
+    flex-shrink: 0;
+  }
+
+  .cta-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+    color: rgba(240, 239, 245, 0.45);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .cta-divider::before,
+  .cta-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: rgba(240, 239, 245, 0.15);
+  }
+
+  .cta-divider span {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    .cta-final {
+      padding: 5rem 0;
+    }
+    .cta-rings {
+      display: none;
+    }
+    .cta-logo {
+      height: 110px;
+    }
+    .cta-sub {
+      font-size: 15px;
+    }
+    .cta-sub.preserve-lines {
+      white-space: normal;
+    }
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('ctaForm') as HTMLFormElement | null;
+  const status = document.getElementById('formStatus') as HTMLElement | null;
+
+  if (form && status) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector<HTMLButtonElement>('[type="submit"]')!;
+      const origText = btn.textContent ?? '';
+      btn.disabled = true;
+      btn.textContent = 'Enviando…';
+
+      try {
+        const data = Object.fromEntries(new FormData(form));
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+        const json = await res.json();
+
+        status.hidden = false;
+        status.removeAttribute('data-err');
+        status.removeAttribute('data-ok');
+
+        if (res.ok && json.success) {
+          status.setAttribute('data-ok', '');
+          status.textContent = 'Mensagem enviada! Retornaremos em até 48 horas.';
+          form.reset();
+        } else {
+          status.setAttribute('data-err', '');
+          status.textContent = json.message ?? 'Erro ao enviar. Tente novamente.';
+        }
+      } catch {
+        status.hidden = false;
+        status.setAttribute('data-err', '');
+        status.textContent = 'Falha na conexão. Tente novamente ou escreva pelo WhatsApp.';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = origText;
+      }
+    });
+  }
+</script>

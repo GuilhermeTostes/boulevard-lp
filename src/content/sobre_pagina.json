@@ -1,0 +1,105 @@
+{
+  "hero": {
+    "eyebrow": "A Boulevard",
+    "titulo": "Construir melhor começa na forma de pensar",
+    "subtitulo": "A Boulevard une arquitetura, planejamento e execução para conduzir projetos e obras com critério, sensibilidade estética e atenção às decisões que definem o resultado final."
+  },
+  "institucional": {
+    "ano_fundacao_label": "Fundada em",
+    "ano_fundacao": "2020",
+    "filosofia_label": "Filosofia",
+    "filosofia": "A Boulevard Arq & Con acredita que a arquitetura vai além do desenho. É estratégia, controle e execução bem resolvida. Integramos projeto e obra para garantir decisões assertivas, custos previsíveis e um processo sem surpresas.\nCada detalhe é pensado para funcionar na prática, com eficiência e clareza do início ao fim.",
+    "posicionamento_label": "Posicionamento",
+    "posicionamento": "Somos uma empresa de arquitetura e construção para quem busca clareza, critério e presença técnica ao projetar, reformar ou construir.",
+    "endereco_label": "Sede",
+    "endereco": "Av. Antônio Diederichsen, 400, sala 904 — Jardim América, Ribeirão Preto, SP, CEP 14020-250"
+  },
+  "mapa": {
+    "endereco_completo": "Av. Antônio Diederichsen, 400, Ribeirão Preto, SP, 14020-250",
+    "rotulo_marcador": "Boulevard Arq & Con"
+  },
+  "processo_resumido": {
+    "eyebrow": "Nossa abordagem",
+    "titulo": "Três pilares que definem como trabalhamos",
+    "colunas": [
+      {
+        "numero": "01",
+        "titulo": "Critério antes da decisão",
+        "descricao": "Antes de propor qualquer solução, entendemos o cliente, o espaço, o uso e as expectativas envolvidas. Cada escolha nasce de uma leitura cuidadosa para que o projeto ou obra comece com mais clareza."
+      },
+      {
+        "numero": "02",
+        "titulo": "Viabilidade para sair do papel",
+        "descricao": "Estética, conforto, desempenho e orçamento precisam caminhar juntos. Nosso trabalho considera o que será bonito, funcional e possível de se executar, evitando quebras de expectativa entre a ideia e a entrega."
+      },
+      {
+        "numero": "03",
+        "titulo": "Presença técnica no processo",
+        "descricao": "Acompanhamos cada etapa com responsabilidade, atenção aos detalhes e cuidado com as decisões que definem o resultado final. \nPara a Boulevard, qualidade depende de presença, não de improviso."
+      }
+    ]
+  },
+  "area_atuacao": {
+    "eyebrow": "Onde atuamos",
+    "titulo": "Área de atuação",
+    "subtitulo": "Nossa base é São Paulo. Atendemos projetos em outras regiões mediante análise de logística.",
+    "estados_destacados": [
+      "SP",
+      "RJ",
+      "PR",
+      "PI",
+      "ES",
+      "SC",
+      "RS"
+    ],
+    "cidades": [
+      {
+        "estado": "São Paulo",
+        "lista": [
+          "São Paulo",
+          "Campinas",
+          "Ribeirão Preto",
+          "São José dos Campos",
+          "Cruzeiro"
+        ]
+      },
+      {
+        "estado": "Paraná",
+        "lista": [
+          "Foz do Iguaçu",
+          "Curitiba"
+        ]
+      },
+      {
+        "estado": "Espírito Santo",
+        "lista": [
+          "Serra"
+        ]
+      },
+      {
+        "estado": "Piaui",
+        "lista": [
+          "Bom Jesus"
+        ]
+      },
+      {
+        "estado": "Rio de Janeiro",
+        "lista": [
+          "Rio de Janeiro"
+        ]
+      },
+      {
+        "estado": "Santa Catarina",
+        "lista": [
+          "Joinville"
+        ]
+      },
+      {
+        "estado": "Rio Grande do Sul",
+        "lista": [
+          "Capão da Canoa"
+        ]
+      }
+    ]
+  }
+}
