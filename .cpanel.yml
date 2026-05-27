@@ -1,4 +1,4 @@
 ---
 deployment:
   tasks:
-    - /bin/cp -R * /home2/lemona41/lp.boulevard-arqcon.com.br
+    - /bin/cp -R dist/. /home2/lemona41/lp.boulevard-arqcon.com.br
