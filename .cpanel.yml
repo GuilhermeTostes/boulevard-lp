@@ -1,4 +1,5 @@
 ---
 deployment:
   tasks:
-    - /bin/cp -R dist/. /home2/lemona41/lp.boulevard-arqcon.com.br
+    - export DEPLOYPATH=/home2/lemona41/lp.boulevard-arqcon.com.br
+    - /bin/cp -Rf dist/. $DEPLOYPATH
