@@ -199,20 +199,38 @@ const projetos = allProjetos
           <h2>Pronto para começar?</h2>
           <p class="lp-cta-sub">Antes de qualquer proposta, queremos conhecer você, entender o que deseja construir e apresentar como a Boulevard pode conduzir esse processo.</p>
           <form class="lp-cta-form" id="lpCtaForm">
-            <input type="hidden" name="access_key" value="454d1f88-df26-4dc0-b7b7-6e8496c40ad0" />
+            <input type="hidden" name="access_key" value="67f4590d-8fbc-4646-928c-9986a444b7c9" />
             <input type="hidden" name="subject" value="Novo contato — LP Boulevard" />
             <input type="hidden" name="from_name" value="Site Boulevard" />
             <input type="checkbox" name="botcheck" style="display: none;" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <input type="hidden" name="page_url" id="lpPageUrl" />
             <div class="lp-form-row">
               <input name="nome" type="text" required placeholder="Nome" autocomplete="name" />
               <input name="telefone" type="tel" required placeholder="Telefone" autocomplete="tel" />
             </div>
-            <select name="assunto" required>
-              <option value="" disabled selected>Assunto de interesse</option>
-              <option value="projeto">Projeto</option>
-              <option value="obra">Obra</option>
+            <input name="email" type="email" required placeholder="E-mail" autocomplete="email" />
+            <select name="interesse" required>
+              <option value="" disabled selected>Qual é o seu interesse?</option>
+              <option value="Projeto">Projeto</option>
+              <option value="Obra">Obra</option>
+              <option value="Projeto + Obra">Projeto + Obra</option>
             </select>
-            <textarea name="mensagem" rows="3" placeholder="Nos conte um pouco sobre o que gostaria de realizar"></textarea>
+            <select name="prazo" required>
+              <option value="" disabled selected>Quando pretende construir?</option>
+              <option value="1 mês">Em até 1 mês</option>
+              <option value="3 meses">Em até 3 meses</option>
+              <option value="6 meses">Em até 6 meses</option>
+              <option value="12 meses">Em até 12 meses</option>
+              <option value="+12 meses">Mais de 12 meses</option>
+            </select>
+            <select name="orcamento" required>
+              <option value="" disabled selected>Valor estimado da obra</option>
+              <option value="Até R$ 300 mil">Até R$ 300 mil</option>
+              <option value="Até R$ 500 mil">Até R$ 500 mil</option>
+              <option value="Até R$ 1 milhão">Até R$ 1 milhão</option>
+              <option value="Acima de R$ 1 milhão">Acima de R$ 1 milhão</option>
+            </select>
+            <textarea name="mensagem" rows="3" required placeholder="Nos conte mais sobre o que gostaria de realizar"></textarea>
             <button type="submit" class="btn btn-outline-light lp-form-submit">
               Enviar mensagem
             </button>
@@ -249,9 +267,9 @@ const projetos = allProjetos
     inset: 0;
     background: linear-gradient(
       to top,
-      rgba(24, 46, 48, 0.92) 0%,
-      rgba(24, 46, 48, 0.5) 45%,
-      rgba(24, 46, 48, 0.18) 100%
+      rgba(24, 46, 48, 0.96) 0%,
+      rgba(24, 46, 48, 0.72) 40%,
+      rgba(24, 46, 48, 0.25) 100%
     );
   }
 
@@ -278,9 +296,20 @@ const projetos = allProjetos
     font-size: clamp(15px, 1.4vw, 17px);
     font-weight: 300;
     line-height: 1.75;
-    color: rgba(240, 239, 245, 0.68);
+    color: rgba(240, 239, 245, 0.95);
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
     max-width: 500px;
     margin-bottom: 2.5rem;
+  }
+
+  .lp-hero-content .label {
+    display: inline-block;
+    background: var(--dourado);
+    border: none;
+    border-radius: 100px;
+    padding: 6px 18px;
+    color: var(--verde-dk);
+    letter-spacing: 0.12em;
   }
 
   .lp-hero-ctas {
@@ -304,7 +333,7 @@ const projetos = allProjetos
   /* ── Faixa de qualificação ────────────────────────────── */
   .lp-audience-strip {
     background: var(--dourado);
-    padding: 1.625rem 0;
+    padding: 2.25rem 0;
     cursor: default;
     transition: background 0.3s var(--ease-premium);
   }
@@ -319,16 +348,18 @@ const projetos = allProjetos
   }
 
   .lp-audience-text {
-    font-size: 16px;
-    font-weight: 400;
+    font-size: clamp(13px, 1.4vw, 15px);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     line-height: 1.6;
     color: var(--verde-dk);
     text-align: center;
   }
 
   .lp-audience-text strong {
-    font-weight: 700;
-    letter-spacing: 0.01em;
+    font-weight: 800;
+    letter-spacing: 0.12em;
   }
 
   /* ── Value Prop ───────────────────────────────────────── */
@@ -400,7 +431,7 @@ const projetos = allProjetos
     font-size: 15px;
     font-weight: 300;
     line-height: 1.8;
-    color: var(--muted);
+    color: rgba(33, 62, 64, 0.7);
   }
 
   @media (max-width: 768px) {
@@ -476,7 +507,7 @@ const projetos = allProjetos
     font-size: 15px;
     font-weight: 300;
     line-height: 1.8;
-    color: var(--muted-dk);
+    color: rgba(240, 239, 245, 0.82);
     flex: 1;
     margin-bottom: 2rem;
   }
@@ -712,7 +743,7 @@ const projetos = allProjetos
     font-size: 16px;
     font-weight: 300;
     line-height: 1.85;
-    color: var(--muted);
+    color: rgba(33, 62, 64, 0.7);
     margin-bottom: 1.25rem;
     max-width: 52ch;
   }
@@ -818,7 +849,7 @@ const projetos = allProjetos
     font-size: 13px;
     font-weight: 300;
     line-height: 1.7;
-    color: var(--muted);
+    color: rgba(33, 62, 64, 0.7);
   }
 
   @media (max-width: 1024px) {
@@ -888,7 +919,7 @@ const projetos = allProjetos
     font-size: 16px;
     font-weight: 300;
     line-height: 1.75;
-    color: rgba(240, 239, 245, 0.6);
+    color: rgba(240, 239, 245, 0.82);
     margin-bottom: 2.5rem;
   }
 
@@ -907,6 +938,7 @@ const projetos = allProjetos
 
   .lp-cta-form input[type="text"],
   .lp-cta-form input[type="tel"],
+  .lp-cta-form input[type="email"],
   .lp-cta-form select,
   .lp-cta-form textarea {
     width: 100%;
@@ -948,7 +980,8 @@ const projetos = allProjetos
 
   .lp-cta-form input:focus,
   .lp-cta-form select:focus,
-  .lp-cta-form textarea:focus {
+  .lp-cta-form textarea:focus,
+  .lp-cta-form input[type="email"]:focus {
     border-color: var(--dourado);
   }
 
@@ -989,6 +1022,8 @@ const projetos = allProjetos
 <script>
   const form = document.getElementById('lpCtaForm') as HTMLFormElement | null;
   const status = document.getElementById('lpFormStatus') as HTMLElement | null;
+  const pageUrlField = document.getElementById('lpPageUrl') as HTMLInputElement | null;
+  if (pageUrlField) pageUrlField.value = window.location.href;
 
   if (form && status) {
     form.addEventListener('submit', async (e) => {
@@ -1010,8 +1045,16 @@ const projetos = allProjetos
         status.removeAttribute('data-ok');
         if (res.ok && json.success) {
           status.setAttribute('data-ok', '');
-          status.textContent = 'Mensagem enviada! Retornaremos em até 48 horas.';
+          status.textContent = 'Mensagem enviada! Redirecionando para o WhatsApp…';
           form.reset();
+          setTimeout(() => {
+            const phone = '5516997331615';
+            const msg = encodeURIComponent('Olá! Acabei de enviar uma mensagem pelo site da Boulevard. Pode me ajudar?');
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            window.location.href = isMobile
+              ? `https://api.whatsapp.com/send?phone=${phone}&text=${msg}`
+              : `https://web.whatsapp.com/send?phone=${phone}&text=${msg}`;
+          }, 2000);
         } else {
           status.setAttribute('data-err', '');
           status.textContent = json.message ?? 'Erro ao enviar. Tente novamente.';
