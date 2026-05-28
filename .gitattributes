@@ -1,0 +1,12 @@
+# Força LF em todos os arquivos de texto para compatibilidade com servidor Linux
+* text=auto eol=lf
+
+# Binários — sem conversão
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.JPG binary
+*.woff2 binary
+*.ttf binary
+*.pdf binary
+*.geojson binary
