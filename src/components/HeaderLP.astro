@@ -229,14 +229,12 @@ const telDisplay = configs.contato_tel.replace(/^\+55\s*/, '');
   /* ── Mobile breakpoint ─────────────────────────────────── */
   @media (max-width: 768px) {
     .header-contacts,
-    .header-cta {
+    .header-cta,
+    .hamburger {
       display: none;
     }
-    .hamburger {
-      display: flex;
-    }
     .mobile-overlay {
-      display: flex;
+      display: none !important;
     }
   }
 </style>
